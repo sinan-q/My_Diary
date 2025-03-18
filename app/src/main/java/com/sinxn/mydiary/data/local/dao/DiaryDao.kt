@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Update
 import com.sinxn.mydiary.data.local.entities.Diary
 import kotlinx.coroutines.flow.Flow
-import java.sql.Timestamp
 import java.time.LocalDate
 
 @Dao

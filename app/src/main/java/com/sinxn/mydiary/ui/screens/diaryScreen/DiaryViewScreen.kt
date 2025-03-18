@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -38,11 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sinxn.mydiary.data.local.entities.Diary
-import com.sinxn.mydiary.utils.Converters
 import com.sinxn.mydiary.utils.formatDate
 import com.sinxn.mydiary.utils.fromMillis
 import com.sinxn.mydiary.utils.toMillis
-import com.sinxn.mytasks.ui.components.RectangleFAB
+import com.sinxn.mydiary.ui.components.RectangleFAB
 import java.time.Instant
 import java.time.LocalDate
 
@@ -156,7 +154,7 @@ fun DiaryViewScreen(
 
             if (showDatePicker) {
                 val datePickerState = rememberDatePickerState(
-                    initialSelectedDateMillis = diaryInputState.timestamp.toMillis() ?: Instant.now().toEpochMilli()
+                    initialSelectedDateMillis = diaryInputState.timestamp.toMillis()
                 )
 
                 DatePickerDialog(

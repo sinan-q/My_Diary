@@ -1,7 +1,6 @@
-package com.sinxn.mytasks.ui.components
+package com.sinxn.mydiary.ui.components
 
 import androidx.compose.foundation.border
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

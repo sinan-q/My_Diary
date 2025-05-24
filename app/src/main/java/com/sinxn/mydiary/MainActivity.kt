@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.safeContent
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.sinxn.mydiary.ui.components.BottomBar
 import com.sinxn.mydiary.ui.navigation.NavGraph
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
 import com.sinxn.mydiary.ui.theme.MyDiaryTheme
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
             MyDiaryTheme {
                 Scaffold(
                     contentWindowInsets = WindowInsets.safeContent,
+                    bottomBar = { BottomBar(navController = navController) },
                     modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavGraph(
                         navController = navController,

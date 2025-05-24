@@ -9,19 +9,21 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sinxn.mydiary.data.local.entities.Diary
 import com.sinxn.mydiary.ui.components.RectangleFAB
 import java.time.LocalDate
 
 @Composable
 fun DiaryListScreen(
-    diaries: List<Diary>,
+    diaryViewModel: DiaryViewModel,
     onAddDiaryClick: () -> Unit,
     onDiaryClick: (LocalDate) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val diaries by diaryViewModel.diaries.collectAsState()
     Scaffold(
         floatingActionButton = {
             RectangleFAB(onClick = { onAddDiaryClick() }) {

@@ -3,13 +3,13 @@ package com.sinxn.mydiary.ui.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.sinxn.mydiary.ui.screens.calenderScreen.CalenderScreen
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryListScreen
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewScreen
@@ -47,7 +47,7 @@ fun NavGraph(
     ) {
         composable("diaryList") {
             DiaryListScreen(
-                diaries = diaryViewModel.diaries.collectAsState().value,
+                diaryViewModel = diaryViewModel,
                 onAddDiaryClick = onAddDiaryClick,
                 onDiaryClick = onDiaryClick
             )
@@ -79,6 +79,9 @@ fun NavGraph(
         }
         composable(route = "backup") {
             BackupScreen(viewModel = backupViewModel)
+        }
+        composable(route = "calender") {
+            CalenderScreen(diaryViewModel = diaryViewModel)
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.sinxn.mydiary.ui.components.MyTopAppBar
 import com.sinxn.mydiary.ui.components.RectangleFAB
 import java.time.LocalDate
 
@@ -21,6 +22,7 @@ fun DiaryListScreen(
     diaryViewModel: DiaryViewModel,
     onAddDiaryClick: () -> Unit,
     onDiaryClick: (LocalDate) -> Unit,
+    onBackup: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val diaries by diaryViewModel.diaries.collectAsState()
@@ -29,6 +31,9 @@ fun DiaryListScreen(
             RectangleFAB(onClick = { onAddDiaryClick() }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Diary")
             }
+        },
+        topBar = {
+            MyTopAppBar(onBackup)
         },
         modifier = modifier.fillMaxSize()
     ) { paddingValues ->

@@ -49,7 +49,8 @@ fun NavGraph(
             DiaryListScreen(
                 diaryViewModel = diaryViewModel,
                 onAddDiaryClick = onAddDiaryClick,
-                onDiaryClick = onDiaryClick
+                onDiaryClick = onDiaryClick,
+                onBackup = onBackup
             )
         }
         composable(
@@ -81,7 +82,7 @@ fun NavGraph(
             BackupScreen(viewModel = backupViewModel)
         }
         composable(route = "calender") {
-            CalenderScreen(diaryViewModel = diaryViewModel)
+            CalenderScreen(diaryViewModel = diaryViewModel, onBackup = onBackup)
         }
     }
 }

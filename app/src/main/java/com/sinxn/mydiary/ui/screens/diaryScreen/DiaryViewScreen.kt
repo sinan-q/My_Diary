@@ -3,24 +3,22 @@ package com.sinxn.mydiary.ui.screens.diaryScreen
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,8 +33,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sinxn.mydiary.data.local.entities.Diary
+import com.sinxn.mydiary.ui.components.MyTextField
 import com.sinxn.mydiary.ui.components.RectangleFAB
 import com.sinxn.mydiary.utils.formatDate
 import com.sinxn.mydiary.utils.fromMillis
@@ -98,7 +100,9 @@ fun DiaryViewScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(diaryInputState.timestamp.formatDate())  },
+                title = { Text(diaryInputState.timestamp.formatDate(), modifier = Modifier.clickable {
+                    showDatePicker = isEditing
+                })  },
                 navigationIcon = {
                     IconButton(onClick = onFinish) {
                         Icon(
@@ -126,28 +130,23 @@ fun DiaryViewScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            OutlinedTextField(
+            MyTextField(
                 value = diaryInputState.title,
                 onValueChange = { diaryInputState = diaryInputState.copy(title = it) },
-                label = { Text("Title") },
+                placeholder = "Title",
                 readOnly = !isEditing,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = diaryInputState.timestamp.formatDate(),
-                onValueChange = {},
-                label = { Text("Date") },
-                readOnly = true,
-                trailingIcon = {
-                    IconButton(onClick = { showDatePicker = isEditing }) {
-                        Icon(
-                            imageVector = Icons.Default.DateRange,
-                            contentDescription = "Select Date"
-                        )
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
+                textStyle = TextStyle.Default.copy(
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 18.sp
+                )
+                )
+
+            HorizontalDivider(modifier = Modifier.height(8.dp))
+            MyTextField(
+                value = diaryInputState.content,
+                onValueChange = {diaryInputState = diaryInputState.copy( content = it )},
+                placeholder = "Description",
+                readOnly = !isEditing,
             )
 
             if (showDatePicker) {
@@ -180,14 +179,7 @@ fun DiaryViewScreen(
                     DatePicker(state = datePickerState)
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = diaryInputState.content,
-                onValueChange = {diaryInputState = diaryInputState.copy( content = it )},
-                label = { Text("Description") },
-                readOnly = !isEditing,
-                modifier = Modifier.fillMaxSize()
-            )
+
         }
     }
 }

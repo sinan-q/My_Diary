@@ -37,11 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sinxn.mydiary.data.local.entities.Diary
+import com.sinxn.mydiary.ui.components.RectangleFAB
 import com.sinxn.mydiary.utils.formatDate
 import com.sinxn.mydiary.utils.fromMillis
 import com.sinxn.mydiary.utils.toMillis
-import com.sinxn.mydiary.ui.components.RectangleFAB
-import java.time.Instant
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -81,7 +80,6 @@ fun DiaryViewScreen(
                                     timestamp = timestamp
                                 )
                             )
-                            onFinish()
                         } else {
                             diaryViewModel.toast("Note cannot be empty")
                         }
@@ -100,7 +98,7 @@ fun DiaryViewScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(if (isEditing) "Add Diary" else "Edit Diary") },
+                title = { Text(diaryInputState.timestamp.formatDate())  },
                 navigationIcon = {
                     IconButton(onClick = onFinish) {
                         Icon(

@@ -12,7 +12,7 @@ import java.util.Locale
 
 // Extension function for formatting Date
 fun LocalDate.formatDate(): String {
-    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
+    val formatter = DateTimeFormatter.ofPattern("dd MMM ''yy", Locale.getDefault())
     return this.format(formatter)
 }
 

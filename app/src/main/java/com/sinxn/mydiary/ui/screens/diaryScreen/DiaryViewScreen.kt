@@ -33,10 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sinxn.mydiary.R
+import com.sinxn.mydiary.ui.components.ConfirmationDialog
 import com.sinxn.mydiary.ui.components.MyTextField
 import com.sinxn.mydiary.ui.components.RectangleFAB
 import com.sinxn.mydiary.utils.formatDate
@@ -55,6 +58,8 @@ fun DiaryViewScreen(
     id: Long? = null,
     onFinish: () -> Unit,
 ) {
+    var showDeleteConfirmationDialog by remember { mutableStateOf(false) } // State for dialog
+
     val context = LocalContext.current
     var showDatePicker by remember { mutableStateOf(false) }
     val diaryInputState by diaryViewModel.diary.collectAsState()
@@ -109,8 +114,7 @@ fun DiaryViewScreen(
                 },
                 actions = {
                     if (!isEditing) IconButton(onClick = {
-                        diaryViewModel.deleteDiary()
-                        onFinish()
+                        showDeleteConfirmationDialog = true
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
@@ -178,4 +182,16 @@ fun DiaryViewScreen(
 
         }
     }
+
+    ConfirmationDialog(
+        showDialog = showDeleteConfirmationDialog,
+        onDismiss = { showDeleteConfirmationDialog = false },
+        onConfirm = {
+            diaryViewModel.deleteDiary()
+            showDeleteConfirmationDialog = false
+            onFinish()
+        },
+        title = stringResource(R.string.delete_confirmation_title),
+        message = stringResource(R.string.delete_item_message)
+    )
 }

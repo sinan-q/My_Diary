@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Diary</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_confirmation_title">Confirm deletion</string>
+    <string name="delete_item_message">Are you sure to delete?</string>
 </resources>

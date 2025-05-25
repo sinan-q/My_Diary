@@ -50,14 +50,14 @@ import java.time.LocalDate
 @Composable
 fun DiaryViewScreen(
     modifier: Modifier = Modifier,
-    timestamp: LocalDate,
+    timestamp: LocalDate = LocalDate.now(),
     diaryViewModel: DiaryViewModel,
     isNew: Boolean,
     onFinish: () -> Unit,
 ) {
     val context = LocalContext.current
     var showDatePicker by remember { mutableStateOf(false) }
-    var diaryInputState by remember { mutableStateOf(Diary()) }
+    var diaryInputState by remember { mutableStateOf(Diary(timestamp = timestamp)) }
     var isEditing by remember { mutableStateOf(isNew) }
     val toastMessage by diaryViewModel.toastMessage.collectAsState()
 
@@ -77,11 +77,7 @@ fun DiaryViewScreen(
                 onClick = {
                     if (isEditing) {
                         if (diaryInputState.content.isNotEmpty()) {
-                            diaryViewModel.addDiary(
-                                diaryInputState.copy(
-                                    timestamp = timestamp
-                                )
-                            )
+                            diaryViewModel.addDiary(diaryInputState)
                         } else {
                             diaryViewModel.toast("Note cannot be empty")
                         }

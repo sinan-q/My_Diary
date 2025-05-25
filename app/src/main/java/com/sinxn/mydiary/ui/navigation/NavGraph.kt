@@ -71,7 +71,6 @@ fun NavGraph(
 
         composable(route = "diary/add") {
             DiaryViewScreen (
-                timestamp = LocalDate.now(),
                 onFinish = { navController.popBackStack() },
                 diaryViewModel = diaryViewModel,
                 modifier = Modifier,

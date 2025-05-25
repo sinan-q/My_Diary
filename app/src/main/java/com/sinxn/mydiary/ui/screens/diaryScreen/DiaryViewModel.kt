@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.sinxn.mydiary.data.local.entities.Diary
 import com.sinxn.mydiary.data.repository.DiaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -23,9 +25,14 @@ class DiaryViewModel @Inject constructor(
     private val _diary = MutableStateFlow<Diary?>(null)
     val diary: StateFlow<Diary?> = _diary
 
-    private val _toastMessage = MutableStateFlow<String?>(null)
-    val toastMessage: StateFlow<String?> = _toastMessage
+    private val _toastMessage = MutableSharedFlow<String>()
+    val toastMessage = _toastMessage.asSharedFlow()
 
+    fun toast(message: String) {
+        viewModelScope.launch {
+            _toastMessage.emit(message)
+        }
+    }
     init {
         viewModelScope.launch {
             diaryRepository.getAllDiaries().collect { diaryList ->
@@ -56,9 +63,5 @@ class DiaryViewModel @Inject constructor(
     suspend fun fetchDiaryByTimestamp(timestamp:LocalDate): Diary? {
            return diaryRepository.getDiaryByTimestamp(timestamp)
 
-    }
-
-    fun toast(message: String) {
-        _toastMessage.value = message
     }
 }

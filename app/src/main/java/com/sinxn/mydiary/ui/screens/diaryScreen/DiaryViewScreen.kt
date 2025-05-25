@@ -26,7 +26,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +42,7 @@ import com.sinxn.mydiary.ui.components.RectangleFAB
 import com.sinxn.mydiary.utils.formatDate
 import com.sinxn.mydiary.utils.fromMillis
 import com.sinxn.mydiary.utils.toMillis
+import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -59,17 +59,15 @@ fun DiaryViewScreen(
     var showDatePicker by remember { mutableStateOf(false) }
     var diaryInputState by remember { mutableStateOf(Diary(timestamp = timestamp)) }
     var isEditing by remember { mutableStateOf(isNew) }
-    val toastMessage by diaryViewModel.toastMessage.collectAsState()
 
     LaunchedEffect(isNew) {
         if(!isNew) diaryInputState = diaryViewModel.fetchDiaryByTimestamp(timestamp) ?: Diary()
     }
 
-    LaunchedEffect(toastMessage) {
-        toastMessage?.let { message ->
+    LaunchedEffect(Unit) {
+        diaryViewModel.toastMessage.collectLatest { message -> // or .collect {
             Toast.makeText(context,message,Toast.LENGTH_LONG).show()
         }
-
     }
     Scaffold(
         floatingActionButton = {

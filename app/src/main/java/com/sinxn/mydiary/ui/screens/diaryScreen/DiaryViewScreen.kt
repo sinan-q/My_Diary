@@ -2,6 +2,7 @@ package com.sinxn.mydiary.ui.screens.diaryScreen
 
 import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import com.sinxn.mydiary.R
 import com.sinxn.mydiary.ui.components.ConfirmationDialog
 import com.sinxn.mydiary.ui.components.MyTextField
 import com.sinxn.mydiary.ui.components.RectangleFAB
+import com.sinxn.mydiary.ui.components.rememberPressBackTwiceState
 import com.sinxn.mydiary.utils.formatDate
 import com.sinxn.mydiary.utils.fromMillis
 import com.sinxn.mydiary.utils.toMillis
@@ -64,6 +66,12 @@ fun DiaryViewScreen(
     var showDatePicker by remember { mutableStateOf(false) }
     val diaryInputState by diaryViewModel.diary.collectAsState()
     var isEditing by remember { mutableStateOf(id==null) }
+
+    val handleBackPressAttempt = rememberPressBackTwiceState(
+        enabled = isEditing,
+        onExit = onFinish
+    )
+    BackHandler(onBack = handleBackPressAttempt)
 
     LaunchedEffect(id) {
         if (id == null && date == null) diaryViewModel.resetDiary()
@@ -105,7 +113,7 @@ fun DiaryViewScreen(
                     showDatePicker = isEditing
                 })  },
                 navigationIcon = {
-                    IconButton(onClick = onFinish) {
+                    IconButton(onClick = handleBackPressAttempt) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"

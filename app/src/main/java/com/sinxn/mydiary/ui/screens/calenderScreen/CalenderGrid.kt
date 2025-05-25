@@ -88,7 +88,7 @@ fun CalendarGrid(
             Row(Modifier.fillMaxWidth()) {
                 for (y in x*7 until x*7+7) {
                     val targetDay = days[y]
-                    val diaryForTheDay = diaries.find { it.timestamp == targetDay }
+                    val diaryForTheDay = diaries.find { it.date == targetDay }
                     CalendarDayItem(modifier = Modifier.weight(1f), day = targetDay, isDiaryExistsForTheDay = diaryForTheDay != null, onClick = onClick)
                 }
 

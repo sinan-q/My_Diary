@@ -33,9 +33,9 @@ fun DiaryItem(
 ) {
     Row() {
         Column(modifier = Modifier.fillMaxHeight().padding(end = 10.dp, top= 15.dp), verticalArrangement = Arrangement.Center) {
-            Text(diary.timestamp.dayOfMonth.toString(), fontSize = 18.sp, fontWeight = FontWeight.ExtraBold)
-            Text(diary.timestamp.month.getDisplayName(TextStyle.SHORT, Locale.getDefault()), fontSize = 12.sp, fontWeight = FontWeight.W400, lineHeight = 12.sp)
-            Text(diary.timestamp.year.toString(), fontSize = 12.sp, fontWeight = FontWeight.W300, lineHeight = 10.sp)
+            Text(diary.date.dayOfMonth.toString(), fontSize = 18.sp, fontWeight = FontWeight.ExtraBold)
+            Text(diary.date.month.getDisplayName(TextStyle.SHORT, Locale.getDefault()), fontSize = 12.sp, fontWeight = FontWeight.W400, lineHeight = 12.sp)
+            Text(diary.date.year.toString(), fontSize = 12.sp, fontWeight = FontWeight.W300, lineHeight = 10.sp)
         }
         Card(
             modifier = modifier

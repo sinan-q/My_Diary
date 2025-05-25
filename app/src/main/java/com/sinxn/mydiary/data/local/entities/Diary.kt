@@ -6,7 +6,8 @@ import java.time.LocalDate
 
 @Entity(tableName = "diary")
 data class Diary(
-    @PrimaryKey(autoGenerate = true) val timestamp: LocalDate = LocalDate.now(),
+    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    val date: LocalDate = LocalDate.now(),
     val title: String = "",
     val content: String = "",
 )

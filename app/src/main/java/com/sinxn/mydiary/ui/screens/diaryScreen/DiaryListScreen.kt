@@ -15,13 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sinxn.mydiary.ui.components.MyTopAppBar
 import com.sinxn.mydiary.ui.components.RectangleFAB
-import java.time.LocalDate
 
 @Composable
 fun DiaryListScreen(
     diaryViewModel: DiaryViewModel,
     onAddDiaryClick: () -> Unit,
-    onDiaryClick: (LocalDate) -> Unit,
+    onDiaryClick: (id: Long) -> Unit,
     onBackup: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -45,7 +44,7 @@ fun DiaryListScreen(
             items(diaries) { diary ->
                 DiaryItem(
                     diary = diary,
-                    onClick = { onDiaryClick(diary.timestamp) }
+                    onClick = { onDiaryClick(diary.id) }
                 )
             }
         }

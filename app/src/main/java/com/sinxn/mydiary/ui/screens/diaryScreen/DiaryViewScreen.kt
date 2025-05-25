@@ -26,6 +26,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +37,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sinxn.mydiary.data.local.entities.Diary
 import com.sinxn.mydiary.ui.components.MyTextField
 import com.sinxn.mydiary.ui.components.RectangleFAB
 import com.sinxn.mydiary.utils.formatDate
@@ -50,18 +50,20 @@ import java.time.LocalDate
 @Composable
 fun DiaryViewScreen(
     modifier: Modifier = Modifier,
-    timestamp: LocalDate = LocalDate.now(),
+    date: LocalDate? = null,
     diaryViewModel: DiaryViewModel,
-    isNew: Boolean,
+    id: Long? = null,
     onFinish: () -> Unit,
 ) {
     val context = LocalContext.current
     var showDatePicker by remember { mutableStateOf(false) }
-    var diaryInputState by remember { mutableStateOf(Diary(timestamp = timestamp)) }
-    var isEditing by remember { mutableStateOf(isNew) }
+    val diaryInputState by diaryViewModel.diary.collectAsState()
+    var isEditing by remember { mutableStateOf(id==null) }
 
-    LaunchedEffect(isNew) {
-        if(!isNew) diaryInputState = diaryViewModel.fetchDiaryByTimestamp(timestamp) ?: Diary()
+    LaunchedEffect(id) {
+        if (id == null && date == null) diaryViewModel.resetDiary()
+        if(id != null) diaryViewModel.fetchDiaryById(id)
+        else if(date != null) diaryViewModel.setDate(date)
     }
 
     LaunchedEffect(Unit) {
@@ -75,9 +77,9 @@ fun DiaryViewScreen(
                 onClick = {
                     if (isEditing) {
                         if (diaryInputState.content.isNotEmpty()) {
-                            diaryViewModel.addDiary(diaryInputState)
+                            diaryViewModel.addDiary()
                         } else {
-                            diaryViewModel.toast("Note cannot be empty")
+                            diaryViewModel.toast(DiaryConstants.DIARY_EMPTY)
                         }
                     } else {
                         isEditing = true
@@ -94,7 +96,7 @@ fun DiaryViewScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(diaryInputState.timestamp.formatDate(), modifier = Modifier.clickable {
+                title = { Text(diaryInputState.date.formatDate(), modifier = Modifier.clickable {
                     showDatePicker = isEditing
                 })  },
                 navigationIcon = {
@@ -107,7 +109,7 @@ fun DiaryViewScreen(
                 },
                 actions = {
                     if (!isEditing) IconButton(onClick = {
-                        diaryInputState.let { diaryViewModel.deleteDiary(it) }
+                        diaryViewModel.deleteDiary()
                         onFinish()
                     }) {
                         Icon(
@@ -126,7 +128,7 @@ fun DiaryViewScreen(
         ) {
             MyTextField(
                 value = diaryInputState.title,
-                onValueChange = { diaryInputState = diaryInputState.copy(title = it) },
+                onValueChange = { diaryViewModel.updateDiaryState(diaryInputState.copy(title = it))  },
                 placeholder = "Title",
                 readOnly = !isEditing,
                 textStyle = TextStyle.Default.copy(
@@ -138,14 +140,14 @@ fun DiaryViewScreen(
             HorizontalDivider(modifier = Modifier.height(8.dp))
             MyTextField(
                 value = diaryInputState.content,
-                onValueChange = {diaryInputState = diaryInputState.copy( content = it )},
+                onValueChange = {diaryViewModel.updateDiaryState(diaryInputState.copy( content = it ))},
                 placeholder = "Description",
                 readOnly = !isEditing,
             )
 
             if (showDatePicker) {
                 val datePickerState = rememberDatePickerState(
-                    initialSelectedDateMillis = diaryInputState.timestamp.toMillis()
+                    initialSelectedDateMillis = diaryInputState.date.toMillis()
                 )
 
                 DatePickerDialog(
@@ -154,9 +156,9 @@ fun DiaryViewScreen(
                         TextButton(
                             onClick = {
                                 datePickerState.selectedDateMillis?.let {
-                                    diaryInputState = diaryInputState.copy(
-                                        timestamp = fromMillis(it)
-                                    )
+                                    diaryViewModel.updateDiaryState(diaryInputState.copy(
+                                        date = fromMillis(it)
+                                    ))
                                 }
                                 showDatePicker = false
                             }

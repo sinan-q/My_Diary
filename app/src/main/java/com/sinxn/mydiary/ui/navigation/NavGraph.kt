@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sinxn.mydiary.ui.screens.calenderScreen.CalenderScreen
+import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryConstants
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryListScreen
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewScreen
@@ -26,11 +27,13 @@ fun NavGraph(
     backupViewModel: BackupViewModel,
     modifier: Modifier = Modifier
 ) {
-    val onAddDiaryClick: () -> Unit = { navController.navigate("diary/add") }
-    val onDiaryClick: (timestamp: LocalDate) -> Unit = { timestamp ->
-        navController.navigate("diary/${timestamp.toEpochDay()}")
+    val onAddDiaryClick: () -> Unit = { navController.navigate("${DiaryConstants.DIARY_SCREEN}/add") }
+    val onDiaryClick: (id: Long) -> Unit = { id ->
+        navController.navigate("${DiaryConstants.DIARY_SCREEN}/id=${id}")
     }
-
+    val onDayClick: (date: LocalDate) -> Unit = { date ->
+        navController.navigate("${DiaryConstants.DIARY_SCREEN}/date=${date.toEpochDay()}")
+    }
 
     val onBack: () -> Unit = {
         navController.popBackStack()
@@ -42,10 +45,10 @@ fun NavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = "diaryList",
+        startDestination = DiaryConstants.DIARY_LIST_SCREEN,
         modifier = modifier
     ) {
-        composable("diaryList") {
+        composable(DiaryConstants.DIARY_LIST_SCREEN) {
             DiaryListScreen(
                 diaryViewModel = diaryViewModel,
                 onAddDiaryClick = onAddDiaryClick,
@@ -54,27 +57,39 @@ fun NavGraph(
             )
         }
         composable(
-            route = "diary/{timestamp}",
+            route = "${DiaryConstants.DIARY_SCREEN}/date={timestamp}",
             arguments = listOf(
                 navArgument("timestamp") { type = NavType.LongType; defaultValue = LocalDate.now().toEpochDay() },
                 )
         ) { backStackEntry ->
             val timestamp = backStackEntry.arguments?.getLong("timestamp") ?: LocalDate.now().toEpochDay()
             DiaryViewScreen (
-                timestamp = Converters().epochDayToLocalDate(timestamp),
+                date = Converters().epochDayToLocalDate(timestamp),
                 onFinish = { navController.popBackStack() },
                 diaryViewModel = diaryViewModel,
                 modifier = Modifier,
-                isNew = false
+            )
+        }
+        composable(
+            route = "${DiaryConstants.DIARY_SCREEN}/id={id}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.LongType; defaultValue = 0 },
+            )
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getLong("id") ?: 0
+            DiaryViewScreen (
+                id = id,
+                onFinish = { navController.popBackStack() },
+                diaryViewModel = diaryViewModel,
+                modifier = Modifier,
             )
         }
 
-        composable(route = "diary/add") {
+        composable(route = "${DiaryConstants.DIARY_SCREEN}/add") {
             DiaryViewScreen (
                 onFinish = { navController.popBackStack() },
                 diaryViewModel = diaryViewModel,
                 modifier = Modifier,
-                isNew = true
             )
         }
         composable(route = "backup") {

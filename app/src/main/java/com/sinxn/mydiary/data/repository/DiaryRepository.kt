@@ -14,19 +14,12 @@ class DiaryRepository @Inject constructor(
 
     fun getAllDiaries(): Flow<List<Diary>> = diaryDao.getAllDiaries()
 
-    suspend fun insertDiary(diary: Diary) {
-        diaryDao.insertDiary(diary)
-    }
+    suspend fun insertDiary(diary: Diary): Long = diaryDao.insertDiary(diary)
 
-    suspend fun deleteDiary(diary: Diary) {
-        diaryDao.deleteDiary(diary)
-    }
 
-    suspend fun updateDiary(diary: Diary) {
-        diaryDao.updateDiary(diary)
-    }
+    suspend fun deleteDiary(diary: Diary): Int = diaryDao.deleteDiary(diary)
 
-    suspend fun getDiaryByTimestamp(timestamp: LocalDate): Diary? {
-        return diaryDao.getDiaryByTimestamp(timestamp)
-    }
+    suspend fun getDiaryByDate(date: LocalDate): Diary? = diaryDao.getDiaryByDate(date)
+
+    suspend fun getDiaryById(id: Long): Diary? = diaryDao.getDiaryById(id)
 }

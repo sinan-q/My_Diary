@@ -22,8 +22,8 @@ class DiaryViewModel @Inject constructor(
     private val _diaries = MutableStateFlow<List<Diary>>(emptyList())
     val diaries: StateFlow<List<Diary>> = _diaries.asStateFlow()
 
-    private val _diary = MutableStateFlow<Diary?>(null)
-    val diary: StateFlow<Diary?> = _diary
+    private val _diary = MutableStateFlow(Diary())
+    val diary: StateFlow<Diary> = _diary
 
     private val _toastMessage = MutableSharedFlow<String>()
     val toastMessage = _toastMessage.asSharedFlow()
@@ -41,27 +41,48 @@ class DiaryViewModel @Inject constructor(
         }
     }
 
-    fun addDiary(diary: Diary) {
+    fun setDate(date: LocalDate) {
         viewModelScope.launch {
-            val existingDiary = diaryRepository.getDiaryByTimestamp(timestamp = diary.timestamp)
-            if(existingDiary == null) {
-                diaryRepository.insertDiary(diary)
-                toast("Diary added successfully")
-                } else {
-                toast("Diary already exists")
+            _diary.value = diaryRepository.getDiaryByDate(date) ?: Diary(date = date)
+        }
+    }
+
+    fun addDiary() {
+        viewModelScope.launch {
+            try {
+                val status = diaryRepository.insertDiary(diary.value)
+                if (status == -1L) toast(DiaryConstants.DIARY_UPDATED)
+                else {
+                    _diary.value = _diary.value.copy(id = status)
+                    toast(DiaryConstants.DIARY_ADDED)
+                }
             }
-        }
+            catch (e: Exception) {
+                toast(e.message ?: DiaryConstants.UNKNOWN_ERROR)
+            }
+            }
     }
 
-    fun deleteDiary(diary: Diary) {
+    fun resetDiary() {
+        _diary.value = Diary()
+    }
+
+
+    fun updateDiaryState(diary: Diary) {
+        _diary.value = diary
+    }
+
+    fun deleteDiary() {
         viewModelScope.launch {
-            diaryRepository.deleteDiary(diary)
-            toast("Note Deleted")
+            val status = diaryRepository.deleteDiary(diary.value)
+            toast(if (status == 0) DiaryConstants.DIARY_NOT_DELETED else DiaryConstants.DIARY_DELETED )
         }
     }
 
-    suspend fun fetchDiaryByTimestamp(timestamp:LocalDate): Diary? {
-           return diaryRepository.getDiaryByTimestamp(timestamp)
-
+    fun fetchDiaryById(id : Long) {
+        viewModelScope.launch {
+            _diary.value = diaryRepository.getDiaryById(id) ?: Diary()
+        }
     }
+
 }

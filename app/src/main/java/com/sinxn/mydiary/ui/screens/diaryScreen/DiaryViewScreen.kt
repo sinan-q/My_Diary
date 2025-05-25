@@ -76,15 +76,15 @@ fun DiaryViewScreen(
             RectangleFAB(
                 onClick = {
                     if (isEditing) {
-                        if (diaryInputState.content.isNotEmpty()) {
+                        if (diaryInputState.content.isNotEmpty() || diaryInputState.title.isNotEmpty()) {
                             diaryViewModel.addDiary()
+                            isEditing = false
                         } else {
                             diaryViewModel.toast(DiaryConstants.DIARY_EMPTY)
                         }
                     } else {
                         isEditing = true
                     }
-
 
                 }
             ) {

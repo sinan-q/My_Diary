@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,8 +23,8 @@ import java.time.LocalDate
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    diaryViewModel: DiaryViewModel,
-    backupViewModel: BackupViewModel,
+    diaryViewModel: DiaryViewModel = hiltViewModel(),
+    backupViewModel: BackupViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val onAddDiaryClick: () -> Unit = { navController.navigate("${Routes.DIARY_SCREEN}/add") }
@@ -39,7 +40,7 @@ fun NavGraph(
     }
 
     val onBackup: () -> Unit = {
-        navController.navigate("backup")
+        navController.navigate(Routes.BACKUP_SCREEN)
     }
 
     NavHost(

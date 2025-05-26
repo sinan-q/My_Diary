@@ -71,15 +71,21 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //room
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.room.runtime)
+
+    //Hilt
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+
+    //room
+    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-    ksp(libs.hilt.compiler)
 
     //Biometric Auth
     implementation(libs.androidx.biometric)
     implementation(libs.androidx.appcompat)
+
 }

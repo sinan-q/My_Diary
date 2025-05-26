@@ -2,10 +2,10 @@ package com.sinxn.mydiary
 
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,7 +24,7 @@ import com.sinxn.mydiary.ui.theme.MyDiaryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     private var isAuthenticated by mutableStateOf(false)
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

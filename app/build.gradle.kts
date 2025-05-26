@@ -78,4 +78,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.compiler)
+
+    //Biometric Auth
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.appcompat)
 }

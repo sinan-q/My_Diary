@@ -1,10 +1,6 @@
 package com.sinxn.mydiary.ui.screens.diaryScreen
 
 object DiaryConstants {
-    const val DIARY_SCREEN = "diary"
-    const val DIARY_LIST_SCREEN = "diaryList"
-
-
     const val DIARY_DELETED = "Diary Deleted"
     const val DIARY_ADDED = "Diary Added Successfully"
     const val DIARY_EMPTY = "Diary cannot be empty"

@@ -2,13 +2,13 @@ package com.sinxn.mydiary.ui.screens.calenderScreen
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -27,7 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sinxn.mydiary.data.local.entities.Diary
 import com.sinxn.mydiary.ui.components.RectangleCard
 import java.time.LocalDate
@@ -107,8 +109,11 @@ fun CalendarDayItem(modifier: Modifier, day: LocalDate, isDiaryExistsForTheDay: 
             containerColor = if (day == LocalDate.now()) Color.Unspecified else Color.Transparent
         )
     ) {
-        Column(modifier = Modifier.padding(4.dp).fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = day.dayOfMonth.toString(), style = MaterialTheme.typography.bodyLarge , fontWeight = if(isDiaryExistsForTheDay) FontWeight.ExtraBold else FontWeight.Light)
+        Box(modifier = Modifier.padding(4.dp).fillMaxSize()
+            , contentAlignment = Alignment.Center) {
+            Text( text = day.dayOfMonth.toString(), style = MaterialTheme.typography.bodyLarge , fontWeight = if(isDiaryExistsForTheDay) FontWeight.ExtraBold else FontWeight.Light)
+            if (isDiaryExistsForTheDay) Text(text = ".", textAlign = TextAlign.Center, fontSize = 24.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier.offset(y = 10.dp))
+
         }
     }
 }

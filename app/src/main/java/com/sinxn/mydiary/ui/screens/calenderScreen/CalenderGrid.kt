@@ -41,7 +41,7 @@ fun CalendarGrid(
     onMonthChange: (LocalDate) -> Unit,
 ) {
     var localDate by remember { mutableStateOf(LocalDate.now())  }
-    val WEEK_DAYS = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+    val WEEK_DAYS = listOf( "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
     val firstDayOfMonth = localDate.withDayOfMonth(1)
     val firstDayOfWeek = firstDayOfMonth.minusDays(firstDayOfMonth.dayOfWeek.value.toLong())

@@ -31,9 +31,6 @@ fun NavGraph(
     val onDiaryClick: (id: Long) -> Unit = { id ->
         navController.navigate("${Routes.DIARY_SCREEN}/id=${id}")
     }
-    val onDayClick: (date: LocalDate) -> Unit = { date ->
-        navController.navigate("${Routes.DIARY_SCREEN}/date=${date.toEpochDay()}")
-    }
 
     NavHost(
         navController = navController,
@@ -88,7 +85,9 @@ fun NavGraph(
             BackupScreen(viewModel = backupViewModel)
         }
         composable(route = Routes.CALENDER_SCREEN) {
-            CalenderScreen(diaryViewModel = diaryViewModel, navController = navController)
+            CalenderScreen(diaryViewModel = diaryViewModel, navController = navController, onClick = { date ->
+                navController.navigate("${Routes.DIARY_SCREEN}/date=${Converters().localDateToEpochDay(date)}")
+            })
         }
     }
 }

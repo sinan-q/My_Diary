@@ -16,13 +16,15 @@ import androidx.navigation.NavController
 import com.sinxn.mydiary.ui.components.BottomBar
 import com.sinxn.mydiary.ui.components.MyTopAppBar
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
+import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun CalenderScreen(
     diaryViewModel: DiaryViewModel,
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (LocalDate) -> Unit
 ) {
     val diaries by diaryViewModel.diaries.collectAsState()
 
@@ -35,7 +37,7 @@ fun CalenderScreen(
         modifier = modifier.fillMaxSize()
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
-            CalendarGrid(diaries, onClick = {}, onMonthChange = {})
+            CalendarGrid(diaries, onClick = onClick, onMonthChange = {})
         }
 
     }

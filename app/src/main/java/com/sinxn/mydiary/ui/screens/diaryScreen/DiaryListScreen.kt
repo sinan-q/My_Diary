@@ -2,8 +2,10 @@ package com.sinxn.mydiary.ui.screens.diaryScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -19,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.sinxn.mydiary.ui.components.BottomBar
 import com.sinxn.mydiary.ui.components.MyTopAppBar
 import com.sinxn.mydiary.ui.components.RectangleFAB
 
@@ -27,18 +31,19 @@ fun DiaryListScreen(
     diaryViewModel: DiaryViewModel,
     onAddDiaryClick: () -> Unit,
     onDiaryClick: (id: Long) -> Unit,
-    onBackup: () -> Unit,
-    modifier: Modifier = Modifier
+    navController: NavController,
 ) {
     val diaries by diaryViewModel.diaries.collectAsState()
     Scaffold(
+        contentWindowInsets = WindowInsets.safeContent,
+        bottomBar = { BottomBar(navController = navController) },
         floatingActionButton = {
             RectangleFAB(onClick = { onAddDiaryClick() }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Diary")
             }
         },
         topBar = {
-            MyTopAppBar(onBackup)
+            MyTopAppBar(navController)
         },
     ) { paddingValues ->
         if(diaries.isEmpty())

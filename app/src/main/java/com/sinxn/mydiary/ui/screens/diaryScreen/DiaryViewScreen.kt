@@ -6,8 +6,10 @@ import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -51,7 +53,7 @@ import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun DiaryViewScreen(
     modifier: Modifier = Modifier,
@@ -139,6 +141,7 @@ fun DiaryViewScreen(
                 .padding(padding)
         ) {
             MyTextField(
+                modifier = Modifier.padding(horizontal = 16.dp),
                 value = diaryInputState.title,
                 onValueChange = { diaryViewModel.updateDiaryState(diaryInputState.copy(title = it))  },
                 placeholder = "Title",
@@ -149,8 +152,9 @@ fun DiaryViewScreen(
                 )
                 )
 
-            HorizontalDivider(modifier = Modifier.height(8.dp))
+            HorizontalDivider(modifier = Modifier.height(8.dp).padding(horizontal = 8.dp))
             MyTextField(
+                modifier = Modifier.imePadding().padding(horizontal = 8.dp),
                 value = diaryInputState.content,
                 onValueChange = {diaryViewModel.updateDiaryState(diaryInputState.copy( content = it ))},
                 placeholder = "Description",

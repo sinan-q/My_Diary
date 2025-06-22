@@ -1,6 +1,7 @@
 package com.sinxn.mydiary.ui.components
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -20,7 +21,7 @@ fun RectangleFAB(
     content: @Composable () -> Unit
 ) {
     FloatingActionButton(
-        modifier = modifier.border(1.dp, MaterialTheme.colorScheme.outline, shape),
+        modifier = modifier.imePadding().border(1.dp, MaterialTheme.colorScheme.outline, shape),
         onClick = onClick,
         shape = shape,
         containerColor = containerColor,

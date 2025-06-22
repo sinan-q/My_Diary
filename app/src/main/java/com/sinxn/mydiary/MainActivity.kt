@@ -7,9 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.sinxn.mydiary.ui.components.BottomBar
 import com.sinxn.mydiary.ui.navigation.NavGraph
 import com.sinxn.mydiary.ui.screens.lockScreen.LockScreen
 import com.sinxn.mydiary.ui.theme.MyDiaryTheme
@@ -49,13 +47,13 @@ fun MainAppContent() {
 
     MyDiaryTheme {
         Scaffold(
-            contentWindowInsets = WindowInsets.safeContent,
-            bottomBar = { BottomBar(navController = navController) },
-            modifier = Modifier.fillMaxSize()) { innerPadding ->
+            contentWindowInsets = WindowInsets.statusBars
+        ) {
             NavGraph(
+                modifier = Modifier.padding(it),
                 navController = navController,
-                modifier = Modifier.padding(innerPadding),
             )
         }
+
     }
 }

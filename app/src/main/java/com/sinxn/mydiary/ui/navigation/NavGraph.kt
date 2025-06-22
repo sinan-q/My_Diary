@@ -22,10 +22,10 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun NavGraph(
+    modifier: Modifier = Modifier,
     navController: NavHostController,
     diaryViewModel: DiaryViewModel = hiltViewModel(),
     backupViewModel: BackupViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
 ) {
     val onAddDiaryClick: () -> Unit = { navController.navigate("${Routes.DIARY_SCREEN}/add") }
     val onDiaryClick: (id: Long) -> Unit = { id ->
@@ -33,14 +33,6 @@ fun NavGraph(
     }
     val onDayClick: (date: LocalDate) -> Unit = { date ->
         navController.navigate("${Routes.DIARY_SCREEN}/date=${date.toEpochDay()}")
-    }
-
-    val onBack: () -> Unit = {
-        navController.popBackStack()
-    }
-
-    val onBackup: () -> Unit = {
-        navController.navigate(Routes.BACKUP_SCREEN)
     }
 
     NavHost(
@@ -53,7 +45,7 @@ fun NavGraph(
                 diaryViewModel = diaryViewModel,
                 onAddDiaryClick = onAddDiaryClick,
                 onDiaryClick = onDiaryClick,
-                onBackup = onBackup
+                navController = navController
             )
         }
         composable(
@@ -96,7 +88,7 @@ fun NavGraph(
             BackupScreen(viewModel = backupViewModel)
         }
         composable(route = Routes.CALENDER_SCREEN) {
-            CalenderScreen(diaryViewModel = diaryViewModel, onBackup = onBackup)
+            CalenderScreen(diaryViewModel = diaryViewModel, navController = navController)
         }
     }
 }

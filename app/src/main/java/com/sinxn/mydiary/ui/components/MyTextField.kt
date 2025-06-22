@@ -11,6 +11,7 @@ import androidx.compose.ui.text.TextStyle
 
 @Composable
 fun MyTextField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
@@ -19,7 +20,7 @@ fun MyTextField(
 
 ) {
     TextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
         placeholder = { Text(placeholder) },

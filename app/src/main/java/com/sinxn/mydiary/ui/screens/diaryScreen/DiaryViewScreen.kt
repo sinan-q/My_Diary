@@ -141,7 +141,7 @@ fun DiaryViewScreen(
                 .padding(padding)
         ) {
             MyTextField(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 8.dp),
                 value = diaryInputState.title,
                 onValueChange = { diaryViewModel.updateDiaryState(diaryInputState.copy(title = it))  },
                 placeholder = "Title",

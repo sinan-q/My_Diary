@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -53,7 +54,7 @@ fun CalendarGrid(
     val totalColumns = ceil(days.size / 7f).toInt()
 
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(contentAlignment = Alignment.Center ) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.padding(top = 10.dp, bottom = 10.dp) ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(
                     onClick = {
@@ -66,7 +67,10 @@ fun CalendarGrid(
                         contentDescription = "Previous Month"
                     )
                 }
-                Text(text = localDate.month.toString())
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = localDate.month.toString(), lineHeight = 10.sp)
+                    Text(text = localDate.year.toString(), fontSize = 10.sp, lineHeight = 10.sp)
+                }
                 IconButton(
                     onClick = {
                         localDate = localDate.plusMonths(1)
@@ -81,6 +85,7 @@ fun CalendarGrid(
             }
 
         }
+
         Row {
            for (day in WEEK_DAYS) {
                CalendarDayWeekItem(modifier = Modifier.weight(1f), day = day)
@@ -102,8 +107,8 @@ fun CalendarGrid(
 
 @Composable
 fun CalendarDayItem(modifier: Modifier, day: LocalDate, isDiaryExistsForTheDay: Boolean, onClick: (LocalDate) -> Unit = {}) {
-    RectangleCard(
-        modifier = modifier.height(80.dp),
+    Card(
+        modifier = modifier.height(60.dp),
         onClick = { onClick(day) },
         colors = CardDefaults.cardColors(
             containerColor = if (day == LocalDate.now()) Color.Unspecified else Color.Transparent
@@ -121,7 +126,7 @@ fun CalendarDayItem(modifier: Modifier, day: LocalDate, isDiaryExistsForTheDay: 
 @Composable
 fun CalendarDayWeekItem(modifier: Modifier, day: String) {
     RectangleCard (modifier = modifier) {
-        Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 2.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = day)
         }
     }

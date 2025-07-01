@@ -1,31 +1,40 @@
 package com.sinxn.mydiary.ui.screens.diaryScreen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sinxn.mydiary.ui.components.BottomBar
+import com.sinxn.mydiary.ui.components.MyTextField
 import com.sinxn.mydiary.ui.components.MyTopAppBar
 import com.sinxn.mydiary.ui.components.RectangleFAB
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryListScreen(
     diaryViewModel: DiaryViewModel,
@@ -34,6 +43,8 @@ fun DiaryListScreen(
     navController: NavController,
 ) {
     val diaries by diaryViewModel.diaries.collectAsState()
+    var search by remember { mutableStateOf("") }
+
     Scaffold(
         contentWindowInsets = WindowInsets.safeContent,
         bottomBar = { BottomBar(navController = navController) },
@@ -46,23 +57,37 @@ fun DiaryListScreen(
             MyTopAppBar(navController)
         },
     ) { paddingValues ->
-        if(diaries.isEmpty())
-            Box(modifier = Modifier.fillMaxSize().padding(paddingValues), contentAlignment = Alignment.Center) {
-                Text("No Diaries Found", fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+        Column (modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Row {
+                MyTextField(
+                    modifier = Modifier.fillMaxWidth(0.8f),
+                    value = search,
+                    onValueChange = { search = it },
+                    placeholder = "Search"
+                )
+                IconButton(
+                    onClick = { diaryViewModel.searchDiaries(search) }
+                ) {
+                    Icon(Icons.Default.Search, "Search button")
+                }
             }
 
-        LazyColumn(
-            contentPadding = paddingValues,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
+            if(diaries.isEmpty()) Text("No Diaries Found", fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxSize())
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
 
-            items(diaries) { diary ->
-                DiaryItem(
-                    diary = diary,
-                    onClick = { onDiaryClick(diary.id) }
-                )
+                items(diaries) { diary ->
+                    DiaryItem(
+                        diary = diary,
+                        onClick = { onDiaryClick(diary.id) }
+                    )
+                }
             }
         }
+
     }
 }

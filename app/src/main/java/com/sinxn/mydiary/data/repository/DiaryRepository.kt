@@ -22,4 +22,6 @@ class DiaryRepository @Inject constructor(
     suspend fun getDiaryByDate(date: LocalDate): Diary? = diaryDao.getDiaryByDate(date)
 
     suspend fun getDiaryById(id: Long): Diary? = diaryDao.getDiaryById(id)
+
+    suspend fun searchDiaries(query: String): List<Diary> = diaryDao.searchDiaries(query)
 }

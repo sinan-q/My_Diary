@@ -25,4 +25,7 @@ interface DiaryDao {
 
     @Query("SELECT * FROM diary WHERE id = :id")
     suspend fun getDiaryById(id: Long): Diary?
+
+    @Query("SELECT * FROM diary WHERE title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%'")
+    suspend fun searchDiaries(query: String): List<Diary>
 }

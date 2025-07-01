@@ -67,6 +67,11 @@ class DiaryViewModel @Inject constructor(
         _diary.value = Diary()
     }
 
+    fun searchDiaries(query: String) {
+        viewModelScope.launch {
+            _diaries.value = diaryRepository.searchDiaries(query)
+        }
+    }
 
     fun updateDiaryState(diary: Diary) {
         _diary.value = diary

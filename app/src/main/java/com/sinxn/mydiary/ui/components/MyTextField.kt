@@ -1,6 +1,5 @@
 package com.sinxn.mydiary.ui.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -20,7 +19,7 @@ fun MyTextField(
 
 ) {
     TextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         placeholder = { Text(placeholder) },

@@ -1,5 +1,6 @@
 package com.sinxn.mydiary.ui.screens.homeScreen
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -26,6 +27,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -56,6 +59,14 @@ fun DiaryListScreen(
     var search by remember { mutableStateOf("") }
     val searchResults by homeViewModel.searchResults.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
+    val toastMessage by homeViewModel.toastMessage.collectAsState(initial = "")
+    val context = LocalContext.current
+
+    LaunchedEffect(toastMessage) {
+        if (toastMessage.isNotEmpty()) {
+            Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     Scaffold(
         contentWindowInsets = WindowInsets.safeContent,
@@ -102,10 +113,7 @@ fun DiaryListScreen(
             Spacer(modifier = Modifier.padding(vertical = 5.dp))
 
             if(diaries.isEmpty()) Text("No Diaries Found", fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxSize())
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-
+            LazyColumn {
                 items(items = diaries , key = { it.id }) { diary ->
                     AnimatedVisibility(
                         visible = searchResults.isEmpty() || searchResults.any { it.id == diary.id },

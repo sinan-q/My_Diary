@@ -16,7 +16,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +30,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sinxn.mydiary.ui.components.BottomBar
 import com.sinxn.mydiary.ui.components.MyTopAppBar
@@ -153,10 +153,11 @@ fun MonthYearHeader(
         IconButton(onClick = onPreviousMonth) {
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, "Previous Month")
         }
-        Text(
-            text = "${currentMonth.month.name.lowercase().replaceFirstChar { it.titlecase() }} ${currentMonth.year}",
-            style = MaterialTheme.typography.headlineSmall
-        )
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = currentMonth.month.toString(), lineHeight = 10.sp)
+            Text(text = currentMonth.year.toString(), fontSize = 10.sp, lineHeight = 10.sp)
+        }
         IconButton(onClick = onNextMonth) {
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, "Next Month")
         }

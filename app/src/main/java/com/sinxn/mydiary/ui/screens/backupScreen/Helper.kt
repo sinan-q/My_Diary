@@ -1,4 +1,4 @@
-package com.sinxn.mytasks.ui.screens.backupScreen
+package com.sinxn.mydiary.ui.screens.backupScreen
 
 import android.content.Context
 import android.net.Uri

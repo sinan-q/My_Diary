@@ -15,8 +15,8 @@ import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryListScreen
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewScreen
 import com.sinxn.mydiary.utils.Converters
-import com.sinxn.mytasks.ui.screens.backupScreen.BackupScreen
-import com.sinxn.mytasks.ui.screens.backupScreen.BackupViewModel
+import com.sinxn.mydiary.ui.screens.backupScreen.BackupScreen
+import com.sinxn.mydiary.ui.screens.backupScreen.BackupViewModel
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

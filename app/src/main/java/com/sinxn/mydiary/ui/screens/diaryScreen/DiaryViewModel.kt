@@ -22,6 +22,9 @@ class DiaryViewModel @Inject constructor(
     private val _diaries = MutableStateFlow<List<Diary>>(emptyList())
     val diaries: StateFlow<List<Diary>> = _diaries.asStateFlow()
 
+    private val _searchResults = MutableStateFlow<List<Diary>>(emptyList())
+    val searchResults: StateFlow<List<Diary>> = _searchResults.asStateFlow()
+
     private val _diary = MutableStateFlow(Diary())
     val diary: StateFlow<Diary> = _diary
 
@@ -68,8 +71,30 @@ class DiaryViewModel @Inject constructor(
     }
 
     fun searchDiaries(query: String) {
+        if (query.isEmpty()) {
+            _searchResults.value = emptyList()
+            return
+        }
+
+        // Split the query by "&&" or "||"
+        // This regex will split by "&&" or "||" and also trim whitespace around the tokens
+        val tokens = query.split(Regex("\\s*(\\|\\||&&)\\s*")).filter { it.isNotBlank() }
+
+        // Determine the operator if present (this is a simplified example)
+        // For more complex logic with mixed operators, you'd need a more robust parsing strategy.
+        val operator = if (query.contains("&&")) "AND" else if (query.contains("||")) "OR" else "OR" // Default to OR if no operator
+
+        if (tokens.isEmpty()) {
+            // Handle cases where the query might only contain operators or is otherwise invalid
+            // You might want to show a toast or clear the results
+            _searchResults.value = emptyList()
+            toast("Invalid search query")
+            return
+        }
+
         viewModelScope.launch {
-            _diaries.value = diaryRepository.searchDiaries(query)
+            // You'll need to adapt your repository and DAO to handle tokenized search
+            _searchResults.value = diaryRepository.searchDiariesWithTokens(tokens, operator)
         }
     }
 

@@ -3,7 +3,9 @@ package com.sinxn.mydiary.data.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Upsert
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.sinxn.mydiary.data.local.entities.Diary
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
@@ -28,4 +30,8 @@ interface DiaryDao {
 
     @Query("SELECT * FROM diary WHERE title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%'")
     suspend fun searchDiaries(query: String): List<Diary>
+
+    @RawQuery
+    suspend fun searchDiariesWithTokens(query: SupportSQLiteQuery): List<Diary>
+
 }

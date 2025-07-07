@@ -52,6 +52,7 @@ fun DiaryListScreen(
 ) {
     val diaries by diaryViewModel.diaries.collectAsState()
     var search by remember { mutableStateOf("") }
+    val searchResults by diaryViewModel.searchResults.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
@@ -103,7 +104,7 @@ fun DiaryListScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
 
-                items(diaries) { diary ->
+                items(if (searchResults.isEmpty()) diaries else searchResults) { diary ->
                     DiaryItem(
                         diary = diary,
                         onClick = { onDiaryClick(diary.id) }

@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
@@ -28,7 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -48,6 +52,7 @@ fun DiaryListScreen(
 ) {
     val diaries by diaryViewModel.diaries.collectAsState()
     var search by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         contentWindowInsets = WindowInsets.safeContent,
@@ -72,13 +77,19 @@ fun DiaryListScreen(
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     MyTextField(
-                        modifier = Modifier,
                         value = search,
                         onValueChange = { search = it },
-                        placeholder = "Search"
+                        placeholder = "Search",
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                        keyboardActions =
+                            KeyboardActions(
+                                onSearch = {
+                                    keyboardController?.hide()
+                                    diaryViewModel.searchDiaries(search)
+                                }
+                            )
                     )
                     IconButton(
-                        modifier = Modifier,
                         onClick = { diaryViewModel.searchDiaries(search) }
                     ) {
                         Icon(Icons.Default.Search, "Search button")

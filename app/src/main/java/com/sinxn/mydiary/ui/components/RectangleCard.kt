@@ -20,13 +20,14 @@ fun RectangleCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     colors: CardColors = CardDefaults.cardColors(containerColor = Color.Transparent),
+    shape: androidx.compose.ui.graphics.Shape = RectangleShape,
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(1.dp)
-            .border(1.dp, MaterialTheme.colorScheme.outline, RectangleShape)
+            .border(1.dp, MaterialTheme.colorScheme.outline, shape)
             .clickable {
                 if (onClick != null) {
                     onClick()

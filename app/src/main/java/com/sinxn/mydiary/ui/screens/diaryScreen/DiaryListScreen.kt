@@ -1,5 +1,8 @@
 package com.sinxn.mydiary.ui.screens.diaryScreen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -104,11 +107,17 @@ fun DiaryListScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
 
-                items(if (searchResults.isEmpty()) diaries else searchResults) { diary ->
-                    DiaryItem(
-                        diary = diary,
-                        onClick = { onDiaryClick(diary.id) }
-                    )
+                items(items = diaries , key = { it.id }) { diary ->
+                    AnimatedVisibility(
+                        visible = searchResults.isEmpty() || searchResults.any { it.id == diary.id },
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        DiaryItem(
+                            diary = diary,
+                            onClick = { onDiaryClick(diary.id) },
+                        )
+                    }
                 }
             }
         }

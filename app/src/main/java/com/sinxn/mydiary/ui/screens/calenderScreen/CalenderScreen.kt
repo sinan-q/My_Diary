@@ -15,18 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.sinxn.mydiary.ui.components.BottomBar
 import com.sinxn.mydiary.ui.components.MyTopAppBar
-import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
+import com.sinxn.mydiary.ui.screens.homeScreen.HomeViewModel
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun CalenderScreen(
-    diaryViewModel: DiaryViewModel,
+    homeViewModel: HomeViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
     onClick: (LocalDate) -> Unit
 ) {
-    val diaries by diaryViewModel.diaries.collectAsState()
+    val diaries by homeViewModel.diaries.collectAsState()
 
     Scaffold(
         contentWindowInsets = WindowInsets.safeContent,

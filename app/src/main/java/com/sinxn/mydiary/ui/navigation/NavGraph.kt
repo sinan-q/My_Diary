@@ -10,13 +10,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.sinxn.mydiary.ui.screens.calenderScreen.CalenderScreen
-import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryListScreen
-import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
-import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewScreen
-import com.sinxn.mydiary.utils.Converters
 import com.sinxn.mydiary.ui.screens.backupScreen.BackupScreen
 import com.sinxn.mydiary.ui.screens.backupScreen.BackupViewModel
+import com.sinxn.mydiary.ui.screens.calenderScreen.CalenderScreen
+import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewModel
+import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewScreen
+import com.sinxn.mydiary.ui.screens.homeScreen.DiaryListScreen
+import com.sinxn.mydiary.ui.screens.homeScreen.HomeViewModel
+import com.sinxn.mydiary.utils.Converters
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -24,8 +25,8 @@ import java.time.LocalDate
 fun NavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    homeViewModel: HomeViewModel = hiltViewModel(),
     diaryViewModel: DiaryViewModel = hiltViewModel(),
-    backupViewModel: BackupViewModel = hiltViewModel(),
 ) {
     val onAddDiaryClick: () -> Unit = { navController.navigate("${Routes.DIARY_SCREEN}/add") }
     val onDiaryClick: (id: Long) -> Unit = { id ->
@@ -39,7 +40,7 @@ fun NavGraph(
     ) {
         composable(Routes.DIARY_LIST_SCREEN) {
             DiaryListScreen(
-                diaryViewModel = diaryViewModel,
+                homeViewModel = homeViewModel,
                 onAddDiaryClick = onAddDiaryClick,
                 onDiaryClick = onDiaryClick,
                 navController = navController
@@ -82,10 +83,10 @@ fun NavGraph(
             )
         }
         composable(route = Routes.BACKUP_SCREEN) {
-            BackupScreen(viewModel = backupViewModel)
+            BackupScreen()
         }
         composable(route = Routes.CALENDER_SCREEN) {
-            CalenderScreen(diaryViewModel = diaryViewModel, navController = navController, onClick = { date ->
+            CalenderScreen(homeViewModel = homeViewModel, navController = navController, onClick = { date ->
                 navController.navigate("${Routes.DIARY_SCREEN}/date=${Converters().localDateToEpochDay(date)}")
             })
         }

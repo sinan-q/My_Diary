@@ -1,4 +1,4 @@
-package com.sinxn.mydiary.ui.screens.diaryScreen
+package com.sinxn.mydiary.ui.screens.homeScreen
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

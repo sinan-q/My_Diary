@@ -1,4 +1,4 @@
-package com.sinxn.mydiary.ui.screens.diaryScreen
+package com.sinxn.mydiary.ui.screens.homeScreen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -48,14 +48,14 @@ import com.sinxn.mydiary.ui.components.RectangleFAB
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryListScreen(
-    diaryViewModel: DiaryViewModel,
+    homeViewModel: HomeViewModel,
     onAddDiaryClick: () -> Unit,
     onDiaryClick: (id: Long) -> Unit,
     navController: NavController,
 ) {
-    val diaries by diaryViewModel.diaries.collectAsState()
+    val diaries by homeViewModel.diaries.collectAsState()
     var search by remember { mutableStateOf("") }
-    val searchResults by diaryViewModel.searchResults.collectAsState()
+    val searchResults by homeViewModel.searchResults.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
@@ -89,12 +89,12 @@ fun DiaryListScreen(
                             KeyboardActions(
                                 onSearch = {
                                     keyboardController?.hide()
-                                    diaryViewModel.searchDiaries(search)
+                                    homeViewModel.searchDiaries(search)
                                 }
                             )
                     )
                     IconButton(
-                        onClick = { diaryViewModel.searchDiaries(search) }
+                        onClick = { homeViewModel.searchDiaries(search) }
                     ) {
                         Icon(Icons.Default.Search, "Search button")
                     }

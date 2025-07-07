@@ -157,7 +157,7 @@ fun DiaryViewScreen(
             MyTextField(
                 modifier = Modifier.fillMaxWidth().imePadding().padding(horizontal = 8.dp),
                 value = diaryInputState.content,
-                onValueChange = {diaryViewModel.updateDiaryState(diaryInputState.copy( content = it ))},
+                onValueChange = { diaryViewModel.updateDiaryState(diaryInputState.copy( content = it ))},
                 placeholder = "Description",
                 readOnly = !isEditing,
             )

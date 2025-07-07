@@ -5,9 +5,12 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sinxn.mytasks.ui.components.RectangleButton
@@ -40,18 +43,21 @@ fun BackupScreen(
             Toast.makeText(context, state.toString(), Toast.LENGTH_SHORT).show()
         }
     }
-    Column {
-        RectangleButton(onClick = {
-            directoryPickerLauncher.launch("backup.db")
-            Toast.makeText(context, "Exported!" , Toast.LENGTH_SHORT).show()
-        }) {
-            Text("Export Database")
-        }
+    Scaffold {
+        Column(modifier = Modifier.padding(it)) {
+            RectangleButton(onClick = {
+                directoryPickerLauncher.launch("backup.db")
+                //Toast.makeText(context, "Exported!" , Toast.LENGTH_SHORT).show()
+            }) {
+                Text("Export Database")
+            }
 
-        RectangleButton(onClick = {
-            filePickerLauncher.launch("*/*")
-        }) {
-            Text("Import Database")
+            RectangleButton(onClick = {
+                filePickerLauncher.launch("*/*")
+            }) {
+                Text("Import Database")
+            }
         }
     }
+
 }

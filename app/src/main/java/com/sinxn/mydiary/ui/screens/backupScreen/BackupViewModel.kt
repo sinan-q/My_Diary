@@ -24,7 +24,7 @@ class BackupViewModel @Inject constructor(
     fun exportDatabase(context: Context, uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
             database.close()
-            val dbFile = context.getDatabasePath("app_database")
+            val dbFile = context.getDatabasePath("database")
             try {
                 context.contentResolver.openOutputStream(uri)?.use { outputStream ->
                     dbFile.inputStream().use { inputStream ->
@@ -42,7 +42,7 @@ class BackupViewModel @Inject constructor(
     fun importDatabase(context: Context, backupFile: File) {
         viewModelScope.launch(Dispatchers.IO) {
             database.close()
-            val dbFile = context.getDatabasePath("app_database")
+            val dbFile = context.getDatabasePath("database")
             try {
                 backupFile.copyTo(dbFile, overwrite = true)
                 _backupState.value = BackupState.Completed

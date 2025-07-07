@@ -11,10 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.sinxn.mydiary.ui.navigation.Screen
 
 sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
-    data object Home : BottomNavItem("diaryList", Icons.Default.Home, "Home")
-    data object Calender : BottomNavItem("calender", Icons.Default.DateRange, "Calender")
+    data object Home : BottomNavItem(Screen.Home.route, Icons.Default.Home, "Home")
+    data object Calender : BottomNavItem(Screen.Calender.route, Icons.Default.DateRange, "Calender")
 }
 
 @Composable

@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.sinxn.mydiary.ui.navigation.Routes
+import com.sinxn.mydiary.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +46,7 @@ fun MyTopAppBar(
                 Text(
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp).clickable {
                         topAppBarExpanded = false
-                        navController.navigate(Routes.BACKUP_SCREEN)
+                        navController.navigate(Screen.Backup.route)
                     },
                     text = "Backup"
                 )

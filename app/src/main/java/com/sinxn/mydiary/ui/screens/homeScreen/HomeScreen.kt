@@ -44,13 +44,12 @@ import com.sinxn.mydiary.ui.components.MyTextField
 import com.sinxn.mydiary.ui.components.MyTopAppBar
 import com.sinxn.mydiary.ui.components.RectangleCard
 import com.sinxn.mydiary.ui.components.RectangleFAB
+import com.sinxn.mydiary.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryListScreen(
     homeViewModel: HomeViewModel,
-    onAddDiaryClick: () -> Unit,
-    onDiaryClick: (id: Long) -> Unit,
     navController: NavController,
 ) {
     val diaries by homeViewModel.diaries.collectAsState()
@@ -62,7 +61,7 @@ fun DiaryListScreen(
         contentWindowInsets = WindowInsets.safeContent,
         bottomBar = { BottomBar(navController = navController) },
         floatingActionButton = {
-            RectangleFAB(onClick = { onAddDiaryClick() }) {
+            RectangleFAB(onClick = { navController.navigate(Screen.DiaryView.AddDiary.route) }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Diary")
             }
         },
@@ -115,7 +114,7 @@ fun DiaryListScreen(
                     ) {
                         DiaryItem(
                             diary = diary,
-                            onClick = { onDiaryClick(diary.id) },
+                            onClick = { navController.navigate(Screen.DiaryView.ById.createRoute(diary.id)) },
                         )
                     }
                 }

@@ -42,6 +42,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sinxn.mydiary.R
 import com.sinxn.mydiary.ui.components.ConfirmationDialog
 import com.sinxn.mydiary.ui.components.MyTextField
@@ -59,7 +60,7 @@ import java.time.LocalDate
 fun DiaryViewScreen(
     modifier: Modifier = Modifier,
     date: LocalDate? = null,
-    diaryViewModel: DiaryViewModel,
+    diaryViewModel: DiaryViewModel = hiltViewModel(),
     id: Long? = null,
     onFinish: () -> Unit,
 ) {

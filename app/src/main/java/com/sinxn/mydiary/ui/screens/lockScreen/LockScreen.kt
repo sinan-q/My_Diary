@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -25,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sinxn.mydiary.R
-import com.sinxn.mydiary.ui.theme.MyDiaryTheme
 import com.sinxn.mytasks.ui.components.RectangleButton
 import showBiometricsAuthentication
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LockScreen(
     viewModel: LockViewModel = hiltViewModel(),
@@ -56,33 +57,33 @@ fun LockScreen(
         }
     }
 
-    MyDiaryTheme {
-        Scaffold {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(it), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    HorizontalDivider()
-                    Text(text = stringResource(R.string.app_name), fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 10.dp))
-                    HorizontalDivider()
-                    Spacer(modifier = Modifier.padding(bottom = 30.dp))
-                    if (isBiometricAuthEnabled.value == LockState.LOCKED) {
-                        Text(text = stringResource(R.string.auth_locked))
-                        Spacer(modifier = Modifier.padding(bottom = 10.dp))
-                        RectangleButton(onClick = {
-                            authenticate(onUnlock)
-                        }) {
-                            Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
-                        }
-                    } else {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(48.dp), // Adjust size as needed
-                            color = MaterialTheme.colorScheme.primary // Optional: customize color
-                        )
-                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
+
+    Scaffold {
+        Box(modifier = Modifier.padding(it)
+            .fillMaxSize(),
+            contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                HorizontalDivider()
+                Text(text = stringResource(R.string.app_name), fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 10.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.padding(bottom = 30.dp))
+                if (isBiometricAuthEnabled.value == LockState.LOCKED) {
+                    Text(text = stringResource(R.string.auth_locked))
+                    Spacer(modifier = Modifier.padding(bottom = 10.dp))
+                    RectangleButton(onClick = {
+                        authenticate(onUnlock)
+                    }) {
+                        Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
                     }
+                } else {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(48.dp), // Adjust size as needed
+                        color = MaterialTheme.colorScheme.primary // Optional: customize color
+                    )
+                    Spacer(modifier = Modifier.padding(bottom = 16.dp))
                 }
             }
         }
     }
+
 }

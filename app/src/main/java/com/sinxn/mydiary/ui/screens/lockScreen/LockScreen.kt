@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sinxn.mydiary.R
 import com.sinxn.mydiary.ui.theme.MyDiaryTheme
 import com.sinxn.mytasks.ui.components.RectangleButton
@@ -26,10 +28,19 @@ import showBiometricsAuthentication
 
 @Composable
 fun LockScreen(
+    viewModel: LockViewModel = hiltViewModel(),
     onUnlock: () -> Unit
-) {
+    ) {
     val context = LocalContext.current
 
+    val isBiometricAuthEnabled = viewModel.isBiometricAuthEnabled.collectAsState()
+
+    LaunchedEffect(isBiometricAuthEnabled.value) {
+        Toast.makeText(context, "isBiometricAuthEnabled: ${isBiometricAuthEnabled.value}", Toast.LENGTH_SHORT).show()
+        if (isBiometricAuthEnabled.value == LockState.UNLOCKED) {
+            onUnlock()
+        }
+    }
     fun authenticate(function: () -> Unit) {
         showBiometricsAuthentication(
             context,
@@ -56,11 +67,11 @@ fun LockScreen(
                         Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
                     }
                     //TODO Remove this button
-//                    RectangleButton(onClick = {
-//                        onUnlock()
-//                    }) {
-//                        Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
-//                    }
+                    RectangleButton(onClick = {
+                        onUnlock()
+                    }) {
+                        Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
+                    }
                 }
             }
         }

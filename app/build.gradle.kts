@@ -88,4 +88,7 @@ dependencies {
     implementation(libs.androidx.biometric)
     implementation(libs.androidx.appcompat)
 
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
+
 }

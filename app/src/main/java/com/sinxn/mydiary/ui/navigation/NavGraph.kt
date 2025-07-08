@@ -15,6 +15,8 @@ import com.sinxn.mydiary.ui.screens.calenderScreen.CalenderScreen
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewScreen
 import com.sinxn.mydiary.ui.screens.homeScreen.DiaryListScreen
 import com.sinxn.mydiary.ui.screens.homeScreen.HomeViewModel
+import com.sinxn.mydiary.ui.screens.lockScreen.LockScreen
+import com.sinxn.mydiary.ui.screens.settingsScreen.SettingsScreen
 import com.sinxn.mydiary.utils.Converters
 import java.time.LocalDate
 
@@ -29,9 +31,18 @@ fun NavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.Lock.route,
         modifier = modifier
     ) {
+        composable(Screen.Lock.route) {
+            LockScreen {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(Screen.Lock.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
         composable(Screen.Home.route) {
             DiaryListScreen(
                 homeViewModel = homeViewModel,
@@ -76,6 +87,9 @@ fun NavGraph(
             CalenderScreen(homeViewModel = homeViewModel, navController = navController, onClick = { date ->
                 navController.navigate(Screen.DiaryView.ByDate.createRoute(Converters().localDateToEpochDay(date)))
             })
+        }
+        composable(route = Screen.Settings.route) {
+            SettingsScreen()
         }
     }
 }

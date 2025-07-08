@@ -8,6 +8,4 @@
     <string name="auth_locked_button">Unlock</string>
     <string name="settings_title">Settings</string>
     <string name="setting_enable_biometric_auth">Enable Biometric Authentication</string>
-    <string name="auth_unlocking">Loading</string>
-
 </resources>

@@ -80,15 +80,6 @@ fun LockScreen(
                             color = MaterialTheme.colorScheme.primary // Optional: customize color
                         )
                         Spacer(modifier = Modifier.padding(bottom = 16.dp))
-                        Text(text = stringResource(R.string.auth_unlocking)) // You might want to add a string resource for "Unlocking..."
-
-                    }
-
-                    //TODO Remove this button
-                    RectangleButton(onClick = {
-                        onUnlock()
-                    }) {
-                        Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
                     }
                 }
             }

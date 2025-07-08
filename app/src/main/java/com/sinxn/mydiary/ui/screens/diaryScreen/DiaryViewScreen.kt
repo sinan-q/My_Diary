@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -39,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,6 +53,7 @@ import com.sinxn.mydiary.utils.fromMillis
 import com.sinxn.mydiary.utils.toMillis
 import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -113,9 +114,7 @@ fun DiaryViewScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(diaryInputState.date.formatDate(), modifier = Modifier.clickable {
-                    showDatePicker = isEditing
-                })  },
+                title = {},
                 navigationIcon = {
                     IconButton(onClick = handleBackPressAttempt) {
                         Icon(
@@ -143,7 +142,9 @@ fun DiaryViewScreen(
                 .padding(padding)
         ) {
             MyTextField(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
                 value = diaryInputState.title,
                 onValueChange = { diaryViewModel.updateDiaryState(diaryInputState.copy(title = it))  },
                 placeholder = "Title",
@@ -154,9 +155,22 @@ fun DiaryViewScreen(
                 )
                 )
 
-            HorizontalDivider(modifier = Modifier.height(8.dp).padding(horizontal = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+            Text(
+                "${diaryInputState.date.formatDate()} • ${diaryInputState.date.dayOfWeek.getDisplayName(
+                    java.time.format.TextStyle.FULL, Locale.getDefault())}",
+                fontSize = 12.sp,
+                fontStyle = FontStyle.Italic,
+                modifier = Modifier.padding(horizontal = 20.dp).clickable(
+                    onClick = { showDatePicker = isEditing }
+                )
+            )
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
             MyTextField(
-                modifier = Modifier.fillMaxWidth().imePadding().padding(horizontal = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .imePadding()
+                    .padding(horizontal = 8.dp),
                 value = diaryInputState.content,
                 onValueChange = { diaryViewModel.updateDiaryState(diaryInputState.copy( content = it ))},
                 placeholder = "Description",

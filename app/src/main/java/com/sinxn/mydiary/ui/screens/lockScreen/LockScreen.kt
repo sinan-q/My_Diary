@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +32,12 @@ import showBiometricsAuthentication
 @Composable
 fun LockScreen(
     viewModel: LockViewModel = hiltViewModel(),
-    onUnlock: () -> Unit
-    ) {
+    onUnlock: () -> Unit,
+) {
     val context = LocalContext.current
 
     val isBiometricAuthEnabled = viewModel.isBiometricAuthEnabled.collectAsState()
 
-    LaunchedEffect(isBiometricAuthEnabled.value) {
-        Toast.makeText(context, "isBiometricAuthEnabled: ${isBiometricAuthEnabled.value}", Toast.LENGTH_SHORT).show()
-        if (isBiometricAuthEnabled.value == LockState.UNLOCKED) {
-            onUnlock()
-        }
-    }
     fun authenticate(function: () -> Unit) {
         showBiometricsAuthentication(
             context,
@@ -51,21 +48,44 @@ fun LockScreen(
             }
         )
     }
+
+    LaunchedEffect(isBiometricAuthEnabled.value) {
+        Toast.makeText(context, "isBiometricAuthEnabled: ${isBiometricAuthEnabled.value}", Toast.LENGTH_SHORT).show()
+        if (isBiometricAuthEnabled.value == LockState.UNLOCKED) {
+            onUnlock()
+        } else if (isBiometricAuthEnabled.value == LockState.LOCKED) {
+            authenticate(onUnlock)
+        }
+    }
+
     MyDiaryTheme {
         Scaffold {
-            Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .padding(it), contentAlignment = Alignment.Center) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     HorizontalDivider()
                     Text(text = stringResource(R.string.app_name), fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 10.dp))
                     HorizontalDivider()
                     Spacer(modifier = Modifier.padding(bottom = 30.dp))
-                    Text(text = stringResource(R.string.auth_locked))
-                    Spacer(modifier = Modifier.padding(bottom = 10.dp))
-                    RectangleButton(onClick = {
-                        authenticate(onUnlock)
-                    }) {
-                        Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
+                    if (isBiometricAuthEnabled.value == LockState.LOCKED) {
+                        Text(text = stringResource(R.string.auth_locked))
+                        Spacer(modifier = Modifier.padding(bottom = 10.dp))
+                        RectangleButton(onClick = {
+                            authenticate(onUnlock)
+                        }) {
+                            Text( text = stringResource(R.string.auth_locked_button), textAlign = TextAlign.Center)
+                        }
+                    } else {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(48.dp), // Adjust size as needed
+                            color = MaterialTheme.colorScheme.primary // Optional: customize color
+                        )
+                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
+                        Text(text = stringResource(R.string.auth_unlocking)) // You might want to add a string resource for "Unlocking..."
+
                     }
+
                     //TODO Remove this button
                     RectangleButton(onClick = {
                         onUnlock()
@@ -75,10 +95,5 @@ fun LockScreen(
                 }
             }
         }
-
-    }
-
-    LaunchedEffect(Unit) {
-        authenticate(onUnlock)
     }
 }

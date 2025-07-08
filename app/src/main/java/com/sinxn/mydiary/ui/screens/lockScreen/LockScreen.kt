@@ -43,14 +43,12 @@ fun LockScreen(
             context,
             onSuccess = function,
             onError = { errString ->
-                // Authentication error
                 Toast.makeText(context, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
             }
         )
     }
 
     LaunchedEffect(isBiometricAuthEnabled.value) {
-        Toast.makeText(context, "isBiometricAuthEnabled: ${isBiometricAuthEnabled.value}", Toast.LENGTH_SHORT).show()
         if (isBiometricAuthEnabled.value == LockState.UNLOCKED) {
             onUnlock()
         } else if (isBiometricAuthEnabled.value == LockState.LOCKED) {

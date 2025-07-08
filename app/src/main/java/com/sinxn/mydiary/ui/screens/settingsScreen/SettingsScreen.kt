@@ -1,5 +1,6 @@
 package com.sinxn.mydiary.ui.screens.settingsScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,11 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sinxn.mydiary.R
 import com.sinxn.mydiary.ui.screens.lockScreen.LockState
+import showBiometricsAuthentication
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,6 +34,18 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val isBiometricAuthEnabled = viewModel.isBiometricAuthEnabled.collectAsState()
+    val context = LocalContext.current
+
+    fun authenticate(function: () -> Unit) {
+        showBiometricsAuthentication(
+            context,
+            onSuccess = function,
+            onError = { errString ->
+                // Authentication error
+                Toast.makeText(context, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -53,7 +68,9 @@ fun SettingsScreen(
                 Switch(
                     checked = isBiometricAuthEnabled.value == LockState.LOCKED,
                     onCheckedChange = { isChecked ->
-                        viewModel.setBiometricAuthEnabled(isChecked)
+                        authenticate {
+                            viewModel.setBiometricAuthEnabled(isChecked)
+                        }
                     }
                 )
             }

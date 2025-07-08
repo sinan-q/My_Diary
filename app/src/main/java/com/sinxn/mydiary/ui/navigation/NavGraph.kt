@@ -10,6 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.sinxn.mydiary.ui.screens.aboutScreen.AboutScreen
 import com.sinxn.mydiary.ui.screens.backupScreen.BackupScreen
 import com.sinxn.mydiary.ui.screens.calenderScreen.CalenderScreen
 import com.sinxn.mydiary.ui.screens.diaryScreen.DiaryViewScreen
@@ -57,7 +58,6 @@ fun NavGraph(
             DiaryViewScreen (
                 date = Converters().epochDayToLocalDate(timestamp),
                 onFinish = { navController.popBackStack() },
-                modifier = Modifier,
             )
         }
         composable(
@@ -69,27 +69,20 @@ fun NavGraph(
             val id = backStackEntry.arguments?.getLong("id") ?: 0
             DiaryViewScreen (
                 id = id,
-                onFinish = { navController.popBackStack() },
-                modifier = Modifier,
+                onFinish = { navController.popBackStack() }
             )
         }
 
         composable(route = Screen.DiaryView.AddDiary.route) {
-            DiaryViewScreen (
-                onFinish = { navController.popBackStack() },
-                modifier = Modifier,
-            )
-        }
-        composable(route = Screen.Backup.route) {
-            BackupScreen()
+            DiaryViewScreen { navController.popBackStack() }
         }
         composable(route = Screen.Calender.route) {
             CalenderScreen(homeViewModel = homeViewModel, navController = navController, onClick = { date ->
                 navController.navigate(Screen.DiaryView.ByDate.createRoute(Converters().localDateToEpochDay(date)))
             })
         }
-        composable(route = Screen.Settings.route) {
-            SettingsScreen()
-        }
+        composable(route = Screen.Backup.route) { BackupScreen() }
+        composable(route = Screen.Settings.route) { SettingsScreen() }
+        composable(route = Screen.About.route) { AboutScreen() }
     }
 }

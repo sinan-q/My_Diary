@@ -25,7 +25,7 @@ fun MyTopAppBar(
     navController: NavController,
 ) {
     var topAppBarExpanded by remember { mutableStateOf(false) }
-    val dropdownMenuOptions = listOf(Screen.Settings, Screen.Backup)
+    val dropdownMenuOptions = listOf(Screen.Settings, Screen.Backup, Screen.About)
 
     TopAppBar(
         actions = {
@@ -50,7 +50,6 @@ fun MyTopAppBar(
                         }
                     )
                 }
-
             }
         },
         title = { Text("My Diary", style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.ExtraBold), color = MaterialTheme.colorScheme.onSurface) },

@@ -15,4 +15,5 @@ sealed class Screen(val route: String, val name: String? = null) {
     object Backup : Screen("backup_screen", "Backup")
     object Settings : Screen("settings_screen", "Settings")
     object Lock : Screen("lock_screen", "Lock")
+    object About : Screen("about_screen", "About")
 }

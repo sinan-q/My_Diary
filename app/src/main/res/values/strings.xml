@@ -9,4 +9,5 @@
     <string name="settings_title">Settings</string>
     <string name="setting_enable_biometric_auth">Enable Biometric Authentication</string>
     <string name="backup_title">Backup</string>
+    <string name="about_title">About</string>
 </resources>

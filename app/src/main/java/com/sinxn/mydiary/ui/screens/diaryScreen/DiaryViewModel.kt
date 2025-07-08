@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +34,7 @@ class DiaryViewModel @Inject constructor(
 
     fun setDate(date: LocalDate) {
         viewModelScope.launch {
-            _diary.value = diaryRepository.getDiaryByDate(date) ?: Diary(date = date)
+            _diary.value = diaryRepository.getDiaryByDate(date) ?: Diary(date = date, title = date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()))
         }
     }
 
@@ -53,7 +55,7 @@ class DiaryViewModel @Inject constructor(
     }
 
     fun resetDiary() {
-        _diary.value = Diary()
+        _diary.value = Diary(title = LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()))
     }
 
     fun updateDiaryState(diary: Diary) {

@@ -1,0 +1,11 @@
+Well, not much to say, all this does that you can write your daily journal in it!
+
+## Features
+
+- Beautiful Interface (Atleast I hope it is)
+- Add/Edit/Remove Diary entries
+- Calender Screen for quick view of how many days are missed to write diary
+- Authentication - enable biometric authentication from settings
+- Search can include either && (AND) or || (OR)
+- Backup & Restore - (Basic type - whole db is just copied)
+- Double tap to go back while editing - to prevent accidental going back while editing

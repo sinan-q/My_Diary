@@ -45,14 +45,15 @@ fun AboutScreen() {
         Column(modifier = Modifier.padding(it), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(20.dp))
             Image(
-                modifier = Modifier.fillMaxWidth(0.3f),
+                modifier = Modifier.fillMaxWidth(),
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = "app_logo"
             )
+            Text("My Diary", fontWeight = FontWeight.Normal, style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(20.dp))
             CardLayout(
                 imageId = R.drawable.about_version,
-                text = "Version: 1.0 beta",
+                text = "Version: 1.0",
                 subText = "com.sinxn.mydiary"
             ) {}
             CardLayout(

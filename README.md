@@ -8,7 +8,7 @@ Well, not much to say, all this does that you can write your daily journal in it
 
 ## Features
 
-- Beautiful Interface (Atleast I hope it is)
+- Beautiful Interface (At least I hope it is)
 - Add/Edit/Remove Diary entries
 - Calender Screen for quick view of how many days are missed to write diary
 - Authentication - enable biometric authentication from settings

@@ -95,7 +95,7 @@ fun CardLayout(
             Image(modifier = Modifier
                 .padding(15.dp)
                 .size(50.dp), painter = painterResource(id = imageId), contentDescription = imageDesc)
-            Column() {
+            Column {
                 Text(text = text, fontWeight = FontWeight.Bold)
                 if (subText.isNotBlank()) Text(text = subText, fontWeight = FontWeight.ExtraLight, color = MaterialTheme.colorScheme.outline)
             }

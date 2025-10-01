@@ -31,7 +31,7 @@ fun DiaryItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row() {
+    Row {
         Column(modifier = Modifier.fillMaxHeight().padding(end = 10.dp, top= 10.dp), verticalArrangement = Arrangement.Center) {
             Text(diary.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()), fontSize = 12.sp, fontWeight = FontWeight.W300, lineHeight = 12.sp)
             Text(diary.date.dayOfMonth.toString(), fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, lineHeight = 10.sp)

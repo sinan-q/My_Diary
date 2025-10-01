@@ -1,5 +1,8 @@
+package com.sinxn.mydiary.utils
+
 import android.content.Context
 import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 
@@ -12,16 +15,16 @@ fun showBiometricsAuthentication(
     when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
         BiometricManager.BIOMETRIC_SUCCESS -> {
             val executor = ContextCompat.getMainExecutor(context)
-            val biometricPrompt = androidx.biometric.BiometricPrompt(
+            val biometricPrompt = BiometricPrompt(
                 context as FragmentActivity,
                 executor,
-                object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
+                object : BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                         super.onAuthenticationError(errorCode, errString)
                         onError(errString)
                     }
 
-                    override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
+                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                         super.onAuthenticationSucceeded(result)
                         onSuccess()
                     }
@@ -33,7 +36,7 @@ fun showBiometricsAuthentication(
                 }
             )
 
-            val promptInfo = androidx.biometric.BiometricPrompt.PromptInfo.Builder()
+            val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric Authentication")
                 .setSubtitle("Authenticate using your biometric credential")
                 .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)

@@ -26,8 +26,6 @@ class DiaryRepository @Inject constructor(
 
     suspend fun getDiaryById(id: Long): Diary? = diaryDao.getDiaryById(id)
 
-    suspend fun searchDiaries(query: String): List<Diary> = diaryDao.searchDiaries(query)
-
     suspend fun searchDiariesWithTokens(tokens: List<String>, operator: String): List<Diary> {
         if (tokens.isEmpty()) return emptyList()
 

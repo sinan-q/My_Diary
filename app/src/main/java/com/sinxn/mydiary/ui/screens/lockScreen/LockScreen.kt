@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.sinxn.mydiary.R
-import com.sinxn.mytasks.ui.components.RectangleButton
+import com.sinxn.mydiary.ui.components.RectangleButton
 import showBiometricsAuthentication
 
 @OptIn(ExperimentalMaterial3Api::class)

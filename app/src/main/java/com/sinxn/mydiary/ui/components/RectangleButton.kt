@@ -1,4 +1,4 @@
-package com.sinxn.mytasks.ui.components
+package com.sinxn.mydiary.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.RowScope

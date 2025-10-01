@@ -17,7 +17,8 @@ class DiaryRepository @Inject constructor(
     fun getAllDiaries(): Flow<List<Diary>> = diaryDao.getAllDiaries()
 
     suspend fun insertDiary(diary: Diary): Long = diaryDao.insertDiary(diary)
-
+    suspend fun insertDiaries(diaries: List<Diary>) = diaryDao.insertDiaries(diaries)
+    suspend fun clearAllDiaries() = diaryDao.clearAllDiaries()
 
     suspend fun deleteDiary(diary: Diary): Int = diaryDao.deleteDiary(diary)
 

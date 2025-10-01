@@ -35,8 +35,7 @@ fun BackupScreen(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
-            val file = uriToFile(it, context)  // Convert Uri to File
-            viewModel.importDatabase(context,file)
+            viewModel.importDatabase(context,uri)
         }
     }
 
@@ -50,7 +49,11 @@ fun BackupScreen(
 
     LaunchedEffect(true) {
         viewModel.backupState.collectLatest { state ->
-            Toast.makeText(context, state.toString(), Toast.LENGTH_SHORT).show()
+            if (state is BackupViewModel.BackupState.Error)
+            Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+            else if (state is BackupViewModel.BackupState.Completed)
+                Toast.makeText(context, "Completed Successfully", Toast.LENGTH_SHORT).show()
+
         }
     }
     Scaffold(

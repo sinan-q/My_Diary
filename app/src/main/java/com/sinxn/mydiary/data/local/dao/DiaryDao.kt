@@ -2,6 +2,8 @@ package com.sinxn.mydiary.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Upsert
@@ -19,8 +21,14 @@ interface DiaryDao {
     @Upsert
     suspend fun insertDiary(diary: Diary): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDiaries(diaries: List<Diary>)
+
     @Delete
     suspend fun deleteDiary(diary: Diary): Int
+
+    @Query("DELETE FROM diary")
+    suspend fun clearAllDiaries()
 
     @Query("SELECT * FROM diary WHERE date = :date")
     suspend fun getDiaryByDate(date: LocalDate): Diary?

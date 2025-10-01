@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.sinxn.mydiary.R
 import com.sinxn.mydiary.ui.screens.lockScreen.LockState
-import showBiometricsAuthentication
+import com.sinxn.mydiary.utils.showBiometricsAuthentication
 
 
 @OptIn(ExperimentalMaterial3Api::class)

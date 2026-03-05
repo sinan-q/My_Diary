@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.sinxn.mydiary.R
 import com.sinxn.mydiary.ui.components.RectangleButton
@@ -65,7 +66,7 @@ fun BackupScreen(
     ) {
         Box(modifier = Modifier.padding(it).fillMaxSize(),
             contentAlignment = Alignment.Center) {
-            Column {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 RectangleButton(onClick = {
                     val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
                     directoryPickerLauncher.launch("MyDiary_$timestamp.json")
@@ -78,6 +79,13 @@ fun BackupScreen(
                 }) {
                     Text("Import Database")
                 }
+
+                Text(
+                    text = "⚠ Caution: Importing will replace all existing entries",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
             }
         }
     }

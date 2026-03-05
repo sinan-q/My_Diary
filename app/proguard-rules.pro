@@ -22,6 +22,7 @@
 
 # Keep Gson-serialized classes (adjust package if needed)
 -keep class com.sinxn.mydiary.data.** { *; }
+-keep class com.sinxn.mydiary.ui.screens.backupScreen.BackupViewModel$BackupData { *; }
 
 # For Gson's TypeToken
 -keep class com.google.gson.reflect.TypeToken { *; }

@@ -1,6 +1,7 @@
 package com.sinxn.mydiary.ui.screens.settingsScreen
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -25,7 +29,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.sinxn.mydiary.R
+import com.sinxn.mydiary.ui.navigation.Screen
 import com.sinxn.mydiary.ui.screens.lockScreen.LockState
 import com.sinxn.mydiary.utils.showBiometricsAuthentication
 
@@ -33,6 +39,7 @@ import com.sinxn.mydiary.utils.showBiometricsAuthentication
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
+    navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val isBiometricAuthEnabled = viewModel.isBiometricAuthEnabled.collectAsState()
@@ -77,6 +84,20 @@ fun SettingsScreen(
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { navController.navigate(Screen.Backup.route) }
+                    .padding(vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Backup & Restore")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = "Navigate to Backup & Restore"
+                )
+            }
         }
     }
 }

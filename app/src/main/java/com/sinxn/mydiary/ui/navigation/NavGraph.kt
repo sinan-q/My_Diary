@@ -78,7 +78,7 @@ fun NavGraph(
             })
         }
         composable(route = Screen.Backup.route) { BackupScreen() }
-        composable(route = Screen.Settings.route) { SettingsScreen() }
+        composable(route = Screen.Settings.route) { SettingsScreen(navController = navController) }
         composable(route = Screen.About.route) { AboutScreen() }
     }
 }

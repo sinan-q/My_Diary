@@ -25,7 +25,7 @@ fun MyTopAppBar(
     navController: NavController,
 ) {
     var topAppBarExpanded by remember { mutableStateOf(false) }
-    val dropdownMenuOptions = listOf(Screen.Settings, Screen.Backup, Screen.About)
+    val dropdownMenuOptions = listOf(Screen.Settings, Screen.About)
 
     TopAppBar(
         actions = {

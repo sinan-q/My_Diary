@@ -24,6 +24,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.sinxn.mydiary.R
 import com.sinxn.mydiary.ui.components.RectangleButton
 import kotlinx.coroutines.flow.collectLatest
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +67,8 @@ fun BackupScreen(
             contentAlignment = Alignment.Center) {
             Column {
                 RectangleButton(onClick = {
-                    directoryPickerLauncher.launch("backup.db")
+                    val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
+                    directoryPickerLauncher.launch("MyDiary_$timestamp.json")
                 }) {
                     Text("Export Database")
                 }

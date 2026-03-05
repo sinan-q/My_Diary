@@ -1,9 +1,7 @@
 package com.sinxn.mydiary.ui.screens.diaryScreen
 
-import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -55,7 +53,6 @@ import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
 import java.util.Locale
 
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun DiaryViewScreen(

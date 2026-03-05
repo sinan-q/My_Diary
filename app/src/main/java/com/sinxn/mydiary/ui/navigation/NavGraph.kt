@@ -1,7 +1,6 @@
 package com.sinxn.mydiary.ui.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -21,7 +20,6 @@ import com.sinxn.mydiary.ui.screens.settingsScreen.SettingsScreen
 import com.sinxn.mydiary.utils.Converters
 import java.time.LocalDate
 
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun NavGraph(
     modifier: Modifier = Modifier,

@@ -1,7 +1,6 @@
 package com.sinxn.mydiary.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -16,9 +15,8 @@ fun LocalDate.formatDate(): String {
     return this.format(formatter)
 }
 
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-fun fromMillis(millis :Long): LocalDate {
-    return LocalDate.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+fun fromMillis(millis: Long): LocalDate {
+    return Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
 }
 
 fun LocalDate.toMillis(): Long {

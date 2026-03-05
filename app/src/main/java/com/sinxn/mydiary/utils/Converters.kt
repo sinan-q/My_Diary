@@ -1,7 +1,6 @@
 package com.sinxn.mydiary.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+
 import androidx.room.TypeConverter
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
@@ -35,7 +34,6 @@ class LocalDateAdapter : TypeAdapter<LocalDate>() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     @Throws(IOException::class)
     override fun read(input: JsonReader): LocalDate? {
         return when (input.peek()) {

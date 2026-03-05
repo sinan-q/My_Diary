@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
+import androidx.room.Transaction
 import androidx.room.Upsert
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.sinxn.mydiary.data.local.entities.Diary
@@ -29,6 +30,12 @@ interface DiaryDao {
 
     @Query("DELETE FROM diary")
     suspend fun clearAllDiaries()
+
+    @Transaction
+    suspend fun replaceAllDiaries(diaries: List<Diary>) {
+        clearAllDiaries()
+        insertDiaries(diaries)
+    }
 
     @Query("SELECT * FROM diary WHERE date = :date")
     suspend fun getDiaryByDate(date: LocalDate): Diary?

@@ -82,11 +82,7 @@ class BackupViewModel @Inject constructor(
                 // This uses a helper data class BackupData.
                 val backupDataType = object : TypeToken<BackupData>() {}.type
                 val backupData: BackupData = gson.fromJson(jsonString, backupDataType)
-                repository.clearAllDiaries()
-
-                // Insert the imported data
-                // Ensure your repositories have methods like these (e.g., insertAll, addEvents)
-                repository.insertDiaries(backupData.diary)
+                repository.replaceAllDiaries(backupData.diary)
 
                 _backupState.value = BackupState.Completed
             } catch (e: Exception) {

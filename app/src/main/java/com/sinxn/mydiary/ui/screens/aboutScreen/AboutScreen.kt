@@ -31,6 +31,11 @@ import com.sinxn.mydiary.R
 @Composable
 fun AboutScreen() {
     val context = LocalContext.current
+    val versionName = try {
+        context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "Unknown"
+    } catch (e: Exception) {
+        "Unknown"
+    }
 
     fun openLink(link: String) {
         val intent = Intent(Intent.ACTION_VIEW)
@@ -53,7 +58,7 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(20.dp))
             CardLayout(
                 imageId = R.drawable.about_version,
-                text = "Version: 1.0",
+                text = "Version: $versionName",
                 subText = "com.sinxn.mydiary"
             ) {}
             CardLayout(

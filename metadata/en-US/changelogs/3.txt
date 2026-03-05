@@ -1,0 +1,4 @@
+• Fixed backup import failing on Android 12/13 devices
+• Fixed import crash in release builds (ProGuard/R8)
+• Import is now atomic — no data loss if interrupted
+• Moved Backup & Restore to Settings

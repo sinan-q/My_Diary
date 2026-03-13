@@ -3,8 +3,12 @@
 ![GitHub stars](https://img.shields.io/github/stars/sinan-q/My_Diary)
 ![GitHub forks](https://img.shields.io/github/forks/sinan-q/My_Diary)
 ![GitHub license](https://img.shields.io/github/license/sinan-q/My_Diary)
+![Version](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.sinxn.mydiary&label=IzzyOnDroid)
 
 Well, not much to say, all this does that you can write your daily journal in it!
+
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="60" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/com.sinxn.mydiary)
+
 
 ## Features
 
@@ -19,11 +23,11 @@ Well, not much to say, all this does that you can write your daily journal in it
 ## Screenshots
 
 <p>
-  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_1.webp" width="170" />
-  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_2.webp" width="170" />
-  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_3.webp" width="170" />
-  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_4.webp" width="170" />
-  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_5.webp" width="170" />
+  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_1.png" width="170" />
+  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_2.png" width="170" />
+  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_3.png" width="170" />
+  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_4.png" width="170" />
+  <img src="/metadata/en-US/images/phoneScreenshots/Screenshot_5.png" width="170" />
 </p>
 
 <!--## Installation

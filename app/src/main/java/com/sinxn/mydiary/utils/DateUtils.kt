@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -16,9 +17,9 @@ fun LocalDate.formatDate(pattern: String): String {
 }
 
 fun fromMillis(millis: Long): LocalDate {
-    return Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
+    return Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
 }
 
 fun LocalDate.toMillis(): Long {
-    return LocalDateTime.of(this, LocalTime.now()).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    return this.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 }

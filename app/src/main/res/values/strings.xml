@@ -10,4 +10,5 @@
     <string name="setting_enable_biometric_auth">Enable Biometric Authentication</string>
     <string name="backup_title">Backup</string>
     <string name="about_title">About</string>
+    <string name="setting_enable_default_title">"Show the day name as the default title "</string>
 </resources>

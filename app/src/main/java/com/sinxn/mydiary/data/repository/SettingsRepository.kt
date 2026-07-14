@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 object PreferenceKeys { // Keep your keys organized
     val BIOMETRIC_AUTH_ENABLED = booleanPreferencesKey("biometric_auth_enabled")
-    // Add other preference keys here
+    val DEFAULT_TITLE_ENABLED = booleanPreferencesKey("default_title_enabled")
 }
 
 @Singleton
@@ -33,5 +33,14 @@ class SettingsRepository @Inject constructor(
         }
     }
 
-    // Add other methods to get/set other preferences
+    val isDefaultTitleEnabled: Flow<Boolean> = dataStore.data
+        .map { preferences ->
+            preferences[PreferenceKeys.DEFAULT_TITLE_ENABLED] == true
+        }
+
+    suspend fun setDefaultTitleEnabled(enabled: Boolean) {
+        dataStore.edit { settings ->
+            settings[PreferenceKeys.DEFAULT_TITLE_ENABLED] = enabled
+        }
+    }
 }

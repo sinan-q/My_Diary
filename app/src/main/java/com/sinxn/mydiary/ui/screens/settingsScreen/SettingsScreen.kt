@@ -43,6 +43,8 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val isBiometricAuthEnabled = viewModel.isBiometricAuthEnabled.collectAsState()
+    val isDefaultTitleEnabled = viewModel.isDefaultTitleEnabled.collectAsState()
+
     val context = LocalContext.current
 
     fun authenticate(function: () -> Unit) {
@@ -80,6 +82,20 @@ fun SettingsScreen(
                         authenticate {
                             viewModel.setBiometricAuthEnabled(isChecked)
                         }
+                    }
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = stringResource(R.string.setting_enable_default_title))
+                Switch(
+                    checked = isDefaultTitleEnabled.value,
+                    onCheckedChange = { isChecked ->
+                        viewModel.setDefaultTitleEnabled(isChecked)
                     }
                 )
             }

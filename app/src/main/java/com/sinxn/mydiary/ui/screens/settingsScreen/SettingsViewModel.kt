@@ -30,4 +30,20 @@ class SettingsViewModel @Inject constructor(
 
     }
 
+    val isDefaultTitleEnabled: StateFlow<Boolean> =
+        settingsRepository.isDefaultTitleEnabled
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000), // Keep active for 5s after last subscriber
+                initialValue = false
+            )
+    fun setDefaultTitleEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            settingsRepository.setDefaultTitleEnabled(enabled)
+        }
+
+    }
+
+
+
 }

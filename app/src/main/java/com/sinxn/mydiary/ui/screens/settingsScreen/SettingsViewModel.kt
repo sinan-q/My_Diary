@@ -44,6 +44,20 @@ class SettingsViewModel @Inject constructor(
 
     }
 
+    val dateFormat: StateFlow<String> =
+        settingsRepository.dateFormat
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = "dd MMM ''yy • EEEE"
+            )
+
+    fun setDateFormat(pattern: String) {
+        viewModelScope.launch {
+            settingsRepository.setDateFormat(pattern)
+        }
+    }
+
 
 
 }

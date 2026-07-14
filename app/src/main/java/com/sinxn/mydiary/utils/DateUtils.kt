@@ -10,8 +10,8 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 // Extension function for formatting Date
-fun LocalDate.formatDate(): String {
-    val formatter = DateTimeFormatter.ofPattern("dd MMM ''yy", Locale.getDefault())
+fun LocalDate.formatDate(pattern: String): String {
+    val formatter = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
     return this.format(formatter)
 }
 

@@ -32,6 +32,14 @@ class DiaryViewModel @Inject constructor(
                 initialValue = false
             )
 
+    val dateFormat: StateFlow<String> =
+        settingsRepository.dateFormat
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = "dd MMM ''yy • EEEE"
+            )
+
     private val _diary = MutableStateFlow(getEmptyDiary())
     val diary: StateFlow<Diary> = _diary
 

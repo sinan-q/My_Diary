@@ -51,7 +51,6 @@ import com.sinxn.mydiary.utils.fromMillis
 import com.sinxn.mydiary.utils.toMillis
 import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -67,6 +66,7 @@ fun DiaryViewScreen(
     val context = LocalContext.current
     var showDatePicker by remember { mutableStateOf(false) }
     val diaryInputState by diaryViewModel.diary.collectAsState()
+    val dateFormat by diaryViewModel.dateFormat.collectAsState()
     var isEditing by remember { mutableStateOf(id==null) }
 
     val handleBackPressAttempt = rememberPressBackTwiceState(
@@ -154,8 +154,7 @@ fun DiaryViewScreen(
 
             HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
             Text(
-                "${diaryInputState.date.formatDate()} • ${diaryInputState.date.dayOfWeek.getDisplayName(
-                    java.time.format.TextStyle.FULL, Locale.getDefault())}",
+                diaryInputState.date.formatDate(dateFormat),
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Italic,
                 modifier = Modifier.padding(horizontal = 20.dp).clickable(
